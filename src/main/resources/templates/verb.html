@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script type="text/javascript" src="https://unpkg.com/wanakana@4.0.2/umd/wanakana.min.js"></script>
+    <meta charset="utf-8">
+    <title>Katsudou - Verb Conjugation</title>
+  </head>
+  <body>
+    <h1 class="text-center">Verb Conjugation Practice</h1>
+    <form class="text-center" onsubmit="checkAnswer()" method="get" id="answerForm" autocomplete="off">
+      <div class="" id="verbConjugation">
+      </div><br>
+      <div class="" id="verb">
+      </div><br>
+      <div class="" id="verbType">
+      </div><br>
+      <div class="" id="furigana">
+      </div><br>
+      <input type="text" id="answer" oninput="toKana(this)"><br>
+      <div class="" id="correctAnswer">
+      </div>
+      <fieldset>
+        <legend>Settings</legend>
+          <div th:each="verbConjugation: ${verbConjugations}">
+            <input type="checkbox" th:value="${verbConjugation.id}" id="conjugations">
+            <label class="form-check-label" for="flexCheckDefault">
+              <span th:text="${verbConjugation.conjugationName}">text</span><br>
+            </label>
+          </div>
+      </fieldset>
+    </form>
+  <a th:href="@{/}"><p class="text-center">Return to menu</p></a>
+  <script type="text/javascript">
+  window.onload = (event) => {
+    getNewVerb();
+  }
+
+  document.getElementById('answerForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+  }, false);
+
+  var verb;
+
+  function toKana(text) {
+    text.value = wanakana.toKana(text.value, options = { customKanaMapping: { nn: 'ん' , n:'n'}});
+  }
+
+  function checkAnswer() {
+    var answer = document.getElementById("answer").value;
+    if (wanakana.isKana(answer)) {
+      if(document.getElementById("answer").value == verb.conjugatedVerb)
+        document.getElementById("correctAnswer").innerHTML = "<p style='color:green'>Correct!</p>";
+      else
+        document.getElementById("correctAnswer").innerHTML =
+        "<p style='color:red'>Incorrect!<br>The answer was: " + verb.conjugatedVerb + "</p>";
+      document.getElementById("answer").value = "";
+      getNewVerb();
+    }
+  }
+
+  function getNewVerb() {
+
+    var elements = document.getElementById("answerForm").elements;
+    var settings = "";
+    for(var i = 0; i < elements.length;i++) {
+      if(elements[i].type == "checkbox" && elements[i].checked == true) {
+          settings = settings.concat(elements[i].value,":");
+      }
+    }
+    fetch("/verb/conjugation?settings=".concat(settings.substring(0,settings.length-1)), {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded'}
+    })
+    .then(response => {
+      if(response.ok) {
+        return response.text();
+      }
+    })
+    .then(data => {
+      verb = JSON.parse(data);
+      document.getElementById("verb").innerText = verb.word;
+      document.getElementById("verbType").innerText = verb.type;
+      document.getElementById("furigana").innerText = verb.furigana;
+      document.getElementById("verbConjugation").innerText = verb.verbConjugation;
+    })
+    .catch(error => {
+      alert("no jaló f: " + error);
+    });
+  }
+
+
+  </script>
+  </body>
+</html>
