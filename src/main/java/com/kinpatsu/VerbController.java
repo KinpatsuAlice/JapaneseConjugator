@@ -63,6 +63,15 @@ public class VerbController {
 			verb.setConjugation(conjugationList.get(new Random().nextInt(conjugationList.size())));
 		}
 		return verb;
+		/*TODO: Paso 1: Generar verbo concurrente (de momento con conj random(masu))
+		 * 		Paso 2: Entregar verb concurr a los clientes
+		 * 		Paso 3: Si alguien manda una respuesta correcta, GENERAR nuevo verb
+		 * 		FRONT
+		 * 		Paso 1: Solicitar un verbo a
+		 * 		Paso 2: proceso mágico en segundo plano que verifique si el verbo es el mismo
+		 * 		Paso 2.1: Si es el mismo que tenemos, no hagas nada
+		 * 		Paso 2.2: Si no, cambiarlo :v
+		 * 		Paso 3: llorar*/
 	}
 
 }

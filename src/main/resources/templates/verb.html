@@ -11,24 +11,45 @@
     <h1 class="text-center">Verb Conjugation Practice</h1>
     <form class="text-center" onsubmit="checkAnswer()" method="get" id="answerForm" autocomplete="off">
       <div class="" id="verbConjugation">
-      </div><br>
+        <br>
+      </div>
       <div class="" id="verb">
-      </div><br>
+        <br>
+      </div>
       <div class="" id="verbType">
-      </div><br>
+        <br>
+      </div>
       <div class="" id="furigana">
-      </div><br>
+        <br>
+      </div>
+      <div class="" id="english">
+        <br>
+      </div>
+      <div class="" id="score">
+        <p><span style="color:green">0</span>/<span style="color:red">0</span>/0</p>
+      </div>
       <input type="text" id="answer" oninput="toKana(this)"><br>
       <div class="" id="correctAnswer">
       </div>
       <fieldset>
-        <legend>Settings</legend>
+        <legend>Conjugations</legend>
           <div th:each="verbConjugation: ${verbConjugations}">
-            <input type="checkbox" th:value="${verbConjugation.id}" id="conjugations">
+            <input type="checkbox" th:value="${verbConjugation.id}" class="conjugations">
             <label class="form-check-label" for="flexCheckDefault">
               <span th:text="${verbConjugation.conjugationName}">text</span><br>
             </label>
           </div>
+      </fieldset>
+      <fieldset>
+        <legend>Settings</legend>
+        <input type="checkbox" name="" value="furigana" onchange="changeSettings(this)">
+        Hide furigana
+        <input type="checkbox" name="" value="verbType" onchange="changeSettings(this)">
+        Hide type
+        <input type="checkbox" name="" value="english" onchange="changeSettings(this);">
+        Hide English
+        <input type="checkbox" name="" value="score" onchange="changeSettings(this);">
+        Hide score
       </fieldset>
     </form>
   <a th:href="@{/}"><p class="text-center">Return to menu</p></a>
@@ -42,6 +63,8 @@
   }, false);
 
   var verb;
+  var correctAnswer = 0;
+  var incorrectAnswer = 0;
 
   function toKana(text) {
     text.value = wanakana.toKana(text.value, options = { customKanaMapping: { nn: 'ん' , n:'n'}});
@@ -50,23 +73,32 @@
   function checkAnswer() {
     var answer = document.getElementById("answer").value;
     if (wanakana.isKana(answer)) {
-      if(document.getElementById("answer").value == verb.conjugatedVerb)
+      if(document.getElementById("answer").value == wanakana.toKana(verb.conjugatedVerb)) {
         document.getElementById("correctAnswer").innerHTML = "<p style='color:green'>Correct!</p>";
-      else
+        correctAnswer++;
+      }
+
+      else {
         document.getElementById("correctAnswer").innerHTML =
         "<p style='color:red'>Incorrect!<br>The answer was: " + verb.conjugatedVerb + "</p>";
+        incorrectAnswer++;
+      }
+      var percentage = correctAnswer * 100 / (correctAnswer + incorrectAnswer);
+      document.getElementById("score").innerHTML = "<p><span style='color:green'>" + correctAnswer
+      + "</span>/<span style='color:red'>" + incorrectAnswer + "</span>/"
+      + percentage.toFixed(2) + "%</p>"
       document.getElementById("answer").value = "";
+      //poner listener de enter
       getNewVerb();
     }
   }
 
   function getNewVerb() {
-
-    var elements = document.getElementById("answerForm").elements;
+    var conjugations = document.getElementsByClassName("conjugations");
     var settings = "";
-    for(var i = 0; i < elements.length;i++) {
-      if(elements[i].type == "checkbox" && elements[i].checked == true) {
-          settings = settings.concat(elements[i].value,":");
+    for(var i = 0; i < conjugations.length;i++) {
+      if(conjugations[i].checked) {
+          settings = settings.concat(conjugations[i].value,":");
       }
     }
     fetch("/verb/conjugation?settings=".concat(settings.substring(0,settings.length-1)), {
@@ -84,13 +116,22 @@
       document.getElementById("verbType").innerText = verb.type;
       document.getElementById("furigana").innerText = verb.furigana;
       document.getElementById("verbConjugation").innerText = verb.verbConjugation;
+      var english = "";
+      verb.meaning.forEach(x => english = english.concat(x + ", "));
+      document.getElementById("english").innerText = english.substring(0,english.length-2);
     })
     .catch(error => {
       alert("no jaló f: " + error);
     });
   }
 
-
+  function changeSettings(checkbox) {
+    var setting = document.getElementById(checkbox.value);
+    if (checkbox.checked)
+      setting.style.display = "none";
+    else
+      setting.style.display = "block";
+  }
   </script>
   </body>
 </html>
