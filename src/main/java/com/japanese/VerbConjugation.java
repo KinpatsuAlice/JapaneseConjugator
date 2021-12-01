@@ -18,7 +18,7 @@ public enum VerbConjugation {
 	//Polite form
 	POLITE_FORM("Po","い","ます","Polite form"),
 	POLITE_NEGATIVE_FORM("Po-Ne","い","ません","Polite Negative form"),
-	POLITE_NEGATIVE_PAST_FORM("Po-Ne-Pa","い","ませんでした","Polite Past form"),
+	POLITE_NEGATIVE_PAST_FORM("Po-Ne-Pa","い","ませんでした","Polite Negative Past form"),
 	POLITE_PAST_FORM("Po-Pa","い","ました","Polite Past form"),
 	//Volitional form
 	VOLITIONAL_FORM("Vo","お","う","よう","Volitional form"),
@@ -70,7 +70,7 @@ public enum VerbConjugation {
 		inflections.put("う",new String[] {"わ","い","う","え","お","った","ったら","って"});
 		inflections.put("く",new String[] {"か","き","く","け","こ","いた","いたら","いて"});
 		inflections.put("ぐ",new String[] {"が","ぎ","ぐ","げ","ご","いだ","いだら","いで"});
-		inflections.put("す", new String[] {"さ","し","す","せ","そ","した","したら","して"});
+		inflections.put("す",new String[] {"さ","し","す","せ","そ","した","したら","して"});
 		inflections.put("つ",new String[] {"た","ち","つ","て","と","った","ったら","って"});
 		inflections.put("ぬ",new String[] {"な","に","ぬ","ね","の","んだ","んだら","んで"});
 		inflections.put("ぶ",new String[] {"ば","び","ぶ","べ","ぼ","んだ","んだら","んで"});
@@ -133,7 +133,8 @@ public enum VerbConjugation {
 	
 	public String getIrregularConjugation(Verb verb) {
 		String furigana = verb.getFurigana();
-		return irregulars.get(furigana.substring(furigana.length() - 2,furigana.length()))[this.ordinal()];
+		return furigana.substring(0,furigana.length() - 2)
+				.concat(irregulars.get(furigana.substring(furigana.length() - 2,furigana.length()))[this.ordinal()]);
 	}
 	
 	//Getters

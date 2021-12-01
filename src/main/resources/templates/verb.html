@@ -13,13 +13,13 @@
       <div class="" id="verbConjugation">
         <br>
       </div>
+      <div class="" id="furigana">
+        <br>
+      </div>
       <div class="" id="verb">
         <br>
       </div>
       <div class="" id="verbType">
-        <br>
-      </div>
-      <div class="" id="furigana">
         <br>
       </div>
       <div class="" id="english">
@@ -51,6 +51,15 @@
         <input type="checkbox" name="" value="score" onchange="changeSettings(this);">
         Hide score
       </fieldset>
+      <fieldset>
+        <legend>Filters</legend>
+        <input type="checkbox" name="" value="ICHIDAN" class="filters">
+        Include Ichidan
+        <input type="checkbox" name="" value="GODAN" class="filters">
+        Include Godan
+        <input type="checkbox" name="" value="IRREGULAR" class="filters">
+        Include Irregular
+      </fieldset>
     </form>
   <a th:href="@{/}"><p class="text-center">Return to menu</p></a>
   <script type="text/javascript">
@@ -70,15 +79,14 @@
     text.value = wanakana.toKana(text.value, options = { customKanaMapping: { nn: 'ん' , n:'n'}});
   }
 
-  function checkAnswer() {
-    var answer = document.getElementById("answer").value;
-    if (wanakana.isKana(answer)) {
-      if(document.getElementById("answer").value == wanakana.toKana(verb.conjugatedVerb)) {
+  async function checkAnswer() {
+    var answer = document.getElementById("answer");
+    if (wanakana.isKana(answer.value)) {
+      answer.disabled = true;
+      if(answer.value == verb.conjugatedVerb) {
         document.getElementById("correctAnswer").innerHTML = "<p style='color:green'>Correct!</p>";
         correctAnswer++;
-      }
-
-      else {
+      } else {
         document.getElementById("correctAnswer").innerHTML =
         "<p style='color:red'>Incorrect!<br>The answer was: " + verb.conjugatedVerb + "</p>";
         incorrectAnswer++;
@@ -86,24 +94,50 @@
       var percentage = correctAnswer * 100 / (correctAnswer + incorrectAnswer);
       document.getElementById("score").innerHTML = "<p><span style='color:green'>" + correctAnswer
       + "</span>/<span style='color:red'>" + incorrectAnswer + "</span>/"
-      + percentage.toFixed(2) + "%</p>"
-      document.getElementById("answer").value = "";
-      //poner listener de enter
+      + percentage.toFixed(2) + "%</p>";
+      await waitForEnter();
+      answer.value = "";
+      document.getElementById("correctAnswer").innerHTML = "";
+      answer.disabled = false;
       getNewVerb();
+      document.getElementById("answer").focus();
+      document.getElementById("answer").select();
     }
   }
 
-  function getNewVerb() {
-    var conjugations = document.getElementsByClassName("conjugations");
-    var settings = "";
-    for(var i = 0; i < conjugations.length;i++) {
-      if(conjugations[i].checked) {
-          settings = settings.concat(conjugations[i].value,":");
+  function waitForEnter() {
+    return new Promise((resolve) => {
+      document.addEventListener("keydown", onKeyHandler);
+      function onKeyHandler(e) {
+        if (e.keyCode == 13) {
+          document.removeEventListener("keydown",onKeyHandler);
+          resolve();
+        }
       }
+    });
+  }
+
+  function getNewVerb() {
+    var selectedConj = document.getElementsByClassName("conjugations");
+    var conjugations = "";
+    for(const conjugation of selectedConj) {
+      if(conjugation.checked)
+        conjugations = conjugations.concat(conjugation.value,":");
+    };
+    var selectedFilters = document.getElementsByClassName("filters");
+    var filters = "";
+    for(const filter of selectedFilters) {
+      if(filter.checked)
+        filters = filters.concat(filter.value,":");
+    };
+    let settings = {
+      conjugations: conjugations.substring(0,conjugations.length-1),
+      filters: filters.substring(0,filters.length-1)
     }
-    fetch("/verb/conjugation?settings=".concat(settings.substring(0,settings.length-1)), {
-    method: 'GET',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded'}
+    fetch("/verb/conjugation", {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json'},
+    body: JSON.stringify(settings)
     })
     .then(response => {
       if(response.ok) {
@@ -112,10 +146,16 @@
     })
     .then(data => {
       verb = JSON.parse(data);
-      document.getElementById("verb").innerText = verb.word;
-      document.getElementById("verbType").innerText = verb.type;
-      document.getElementById("furigana").innerText = verb.furigana;
-      document.getElementById("verbConjugation").innerText = verb.verbConjugation;
+      verb.conjugatedVerb = wanakana.toKana(verb.conjugatedVerb);
+      if (verb.word == verb.furigana)
+        document.getElementById("furigana").innerText = "";
+      else
+        document.getElementById("furigana").innerText = verb.furigana;
+        document.getElementById("verb").innerText = verb.word;
+        document.getElementById("verbType").innerText = verb.type;
+        document.getElementById("verbConjugation").innerText = verb.verbConjugation;
+
+
       var english = "";
       verb.meaning.forEach(x => english = english.concat(x + ", "));
       document.getElementById("english").innerText = english.substring(0,english.length-2);

@@ -6,9 +6,14 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -17,6 +22,7 @@ import com.database.Jmdict;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.japanese.*;
+import static com.japanese.VerbSpecifications.filterByVerbType;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -49,17 +55,25 @@ public class VerbController {
 		return "verb";
 	}
 	
-	@GetMapping("/conjugation")
-	public @ResponseBody Verb getVerb(String settings) {
+	@PostMapping("/conjugation")
+	public @ResponseBody Verb getVerb(@RequestBody VerbSettings settings) {
 		//Verb verb = new Verb("脱ぐ","ぬぐ","GODAN", new String[] {"to undress"},true);
-		Verb verb = verbRepository.getRandomVerb(1).get(0);
-		if(settings.length() == 0) {
+		List<String> filters = Arrays.asList(settings.getFilters().split(":"));
+		Verb verb;
+		if (filters.get(0).isEmpty())
+			verb = verbRepository.getRandomVerb(1).get(0);
+		else {
+			Pageable firstElement = PageRequest.of(0, 1);
+			Page<Verb> page = verbRepository.findAll(filterByVerbType(filters),firstElement);
+			verb = page.toList().get(0);
+		}
+		if(settings.getConjugations().isEmpty()) {
 			VerbConjugation[] conjugations = VerbConjugation.values();
 			int conjNum = conjugations.length;
 			verb.setConjugation(conjugations[new Random().nextInt(conjNum)].getId());	
 		} else {
 			List<String> conjugationList = new ArrayList<>();
-			Stream.of(settings.split(":")).forEach(conjugationList::add);
+			Stream.of(settings.getConjugations().split(":")).forEach(conjugationList::add);
 			verb.setConjugation(conjugationList.get(new Random().nextInt(conjugationList.size())));
 		}
 		return verb;
