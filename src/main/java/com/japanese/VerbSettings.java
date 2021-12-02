@@ -5,15 +5,14 @@ import java.util.List;
 
 import org.springframework.data.jpa.domain.Specification;
 
-import lombok.extern.slf4j.Slf4j;
-
 import static com.japanese.VerbSpecifications.*;
 
-@Slf4j
 public class VerbSettings {
 	
 	private String conjugations;
-	private String filters;
+	private String typeFilters;
+	private boolean noExpression;
+	private boolean onlyCommon;
 	
 	
 	//Constructors
@@ -21,23 +20,24 @@ public class VerbSettings {
 		super();
 	}
 	
-	public VerbSettings(String conjugations, String filters) {
+	public VerbSettings(String conjugations, String typeFilters, boolean noExpression, boolean onlyCommon) {
 		super();
 		this.conjugations = conjugations;
-		this.filters = filters;
+		this.typeFilters = typeFilters;
+		this.noExpression = noExpression;
+		this.onlyCommon = onlyCommon;
 	}
-	
+
 	//Utility methods
 	public Specification<Verb> getSpecifications() {
-		List<String> filters =  Arrays.asList(this.filters.split(":"));
+		List<String> filters =  Arrays.asList(this.typeFilters.split(":"));
 		List<VerbType> types = filters.stream()
-				.filter(VerbType::isVerbType)
-				.map(x -> VerbType.valueOf(x))
+				.map(VerbType::valueOf)
 				.toList();
 		Specification<Verb> verbSpecs = filterByVerbType(types);
-		if (filters.contains("COMMON"))
+		if (onlyCommon)
 			verbSpecs = verbSpecs.and(filterByCommon());
-		if (filters.contains("NO_EXPRESSION"))
+		if (noExpression)
 			verbSpecs = verbSpecs.and(restrictExpressions());
 		return verbSpecs;
 	}
@@ -46,16 +46,32 @@ public class VerbSettings {
 	public String getConjugations() {
 		return conjugations;
 	}
+	
 	public void setConjugations(String conjugations) {
 		this.conjugations = conjugations;
 	}
-	public String getFilters() {
-		return filters;
-	}
-	public void setFilters(String filters) {
-		this.filters = filters;
+	
+	public String getTypeFilters() {
+		return typeFilters;
 	}
 	
-	
+	public void setTypeFilters(String filters) {
+		this.typeFilters = filters;
+	}
 
+	public boolean isNoExpression() {
+		return noExpression;
+	}
+
+	public void setNoExpression(boolean noExpression) {
+		this.noExpression = noExpression;
+	}
+
+	public boolean isOnlyCommon() {
+		return onlyCommon;
+	}
+
+	public void setOnlyCommon(boolean onlyCommon) {
+		this.onlyCommon = onlyCommon;
+	}
 }

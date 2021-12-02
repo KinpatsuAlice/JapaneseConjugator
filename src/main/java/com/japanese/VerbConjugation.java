@@ -4,51 +4,48 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.*;
 
-import com.kinpatsu.VerbController;
+import static com.japanese.VerbConjugationClassification.*;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 public enum VerbConjugation {
 	
 	//Casual form
-	NEGATIVE_FORM("Ne","あ","ない","Negative form","Casual"),
-	NEGATIVE_PAST_FORM("Ne-Pa","あ","なかった","Negative Past form","Casual"),
-	PAST_FORM("Pa","た","た","Past form","Casual"),
+	NEGATIVE_FORM("Ne","あ","ない","Negative form",CASUAL),
+	NEGATIVE_PAST_FORM("Ne-Pa","あ","なかった","Negative Past form",CASUAL),
+	PAST_FORM("Pa","た","た","Past form",CASUAL),
 	//Polite form
-	POLITE_FORM("Po","い","ます","Polite form","Polite"),
-	POLITE_NEGATIVE_FORM("Po-Ne","い","ません","Polite Negative form","Polite"),
-	POLITE_NEGATIVE_PAST_FORM("Po-Ne-Pa","い","ませんでした","Polite Negative Past form","Polite"),
-	POLITE_PAST_FORM("Po-Pa","い","ました","Polite Past form","Polite"),
+	POLITE_FORM("Po","い","ます","Polite form",POLITE),
+	POLITE_NEGATIVE_FORM("Po-Ne","い","ません","Polite Negative form",POLITE),
+	POLITE_NEGATIVE_PAST_FORM("Po-Ne-Pa","い","ませんでした","Polite Negative Past form",POLITE),
+	POLITE_PAST_FORM("Po-Pa","い","ました","Polite Past form",POLITE),
 	//Volitional form
-	VOLITIONAL_FORM("Vo","お","う","よう","Volitional form","Volitional"),
-	POLITE_VOLITIONAL_FORM("Po-Vo","い","ましょう","Polite Volitional form","Volitional"),
+	VOLITIONAL_FORM("Vo","お","う","よう","Volitional form",VOLITIONAL),
+	POLITE_VOLITIONAL_FORM("Po-Vo","い","ましょう","Polite Volitional form",VOLITIONAL),
 	//Hypothetical form
-	HYPOTHETICAL_FORM("Hy","え","ば","れば","Hypothetical form","Hypothetical"),
-	NEGATIVE_HYPOTHETICAL_FORM("Ne-Hy","あ","なければ","Negative Hypothetical form","Hypothetical"),
+	HYPOTHETICAL_FORM("Hy","え","ば","れば","Hypothetical form",HYPOTHETICAL),
+	NEGATIVE_HYPOTHETICAL_FORM("Ne-Hy","あ","なければ","Negative Hypothetical form",HYPOTHETICAL),
 	//Conditional form
-	CONDITIONAL_FORM("Cond","たら","たら","Conditional form","Conditional"),
-	NEGATIVE_CONDITIONAL_FORM("Ne-Cond","あ","なかったら","Negative Conditional form","Conditional"),
-	POLITE_NEGATIVE_CONDITIONAL_FORM("Po-Ne-Cond","い","ませんでしたら","Polite Negative Conditional form","Conditional"),
-	POLITE_CONDITIONAL_FORM("Po-Cond","い","ましたら","Polite Conditional form","Conditional"),
+	CONDITIONAL_FORM("Cond","たら","たら","Conditional form",CONDITIONAL),
+	NEGATIVE_CONDITIONAL_FORM("Ne-Cond","あ","なかったら","Negative Conditional form",CONDITIONAL),
+	POLITE_NEGATIVE_CONDITIONAL_FORM("Po-Ne-Cond","い","ませんでしたら","Polite Negative Conditional form",CONDITIONAL),
+	POLITE_CONDITIONAL_FORM("Po-Cond","い","ましたら","Polite Conditional form",CONDITIONAL),
 	//Conjunctive form
-	CONJUNCTIVE_FORM("Conj","て","て","Conjunctive form","Conjunctive"),
-	NEGATIVE_CONJUNCTIVE_FORM("Ne-Conj","あ","ないで","Negative Conjunctive form","Conjunctive"),
-	POLITE_CONJUNCTIVE_FORM("Po-Conj","い","まして","Polite Conjunctive form","Conjunctive"),
-	POLITE_NEGATIVE_CONJUNCTIVE_FORM("Po-Ne-Conj","い","ませんで","Polite Negative Conjuctive form","Conjunctive"),
+	CONJUNCTIVE_FORM("Conj","て","て","Conjunctive form",CONJUNCTIVE),
+	NEGATIVE_CONJUNCTIVE_FORM("Ne-Conj","あ","ないで","Negative Conjunctive form",CONJUNCTIVE),
+	POLITE_CONJUNCTIVE_FORM("Po-Conj","い","まして","Polite Conjunctive form",CONJUNCTIVE),
+	POLITE_NEGATIVE_CONJUNCTIVE_FORM("Po-Ne-Conj","い","ませんで","Polite Negative Conjuctive form",CONJUNCTIVE),
 	//Imperative form
-	NEGATIVE_IMPERATIVE_FORM("Ne-Im","う","な","Negative Imperative","Imperative"),
-	POLITE_IMPERATIVE_FORM("Po-Im","い","なさい","Polite Imperative","Imperative"),
+	NEGATIVE_IMPERATIVE_FORM("Ne-Im","う","な","Negative Imperative",IMPERATIVE),
+	POLITE_IMPERATIVE_FORM("Po-Im","い","なさい","Polite Imperative",IMPERATIVE),
 	//Passive form
-	PASSIVE_FORM("Ps","あ","れる","られる","Passive form","Passive & Causative"),
+	PASSIVE_FORM("Ps","あ","れる","られる","Passive form",PASSIVE_CAUSATIVE),
 	//Causative form
-	CAUSATIVE_FORM("Cs","あ","せる","させる","Causative form","Passive & Causative"),
+	CAUSATIVE_FORM("Cs","あ","せる","させる","Causative form",PASSIVE_CAUSATIVE),
 	//Tai form
-	TAI_FORM("Tai","い","たい","Tai form","Tai"),
-	NEGATIVE_TAI_FORM("Tai-Ne","い","たくない","Negative Tai form","Tai"),
-	NEGATIVE_PAST_TAI_FORM("Tai-Ne-Pa","い","たくなかった","Negative Past Tai form","Tai"),
-	PAST_TAI_FORM("Tai-Pa","い","たかった","Past Tai form","Tai"),
-	SUGIRU_FORM("Sugi","い","すぎる","すぎる form","Others");
+	TAI_FORM("Tai","い","たい","Tai form",TAI),
+	NEGATIVE_TAI_FORM("Tai-Ne","い","たくない","Negative Tai form",TAI),
+	NEGATIVE_PAST_TAI_FORM("Tai-Ne-Pa","い","たくなかった","Negative Past Tai form",TAI),
+	PAST_TAI_FORM("Tai-Pa","い","たかった","Past Tai form",TAI),
+	SUGIRU_FORM("Sugi","い","すぎる","すぎる form",OTHERS);
 	
 	//Enum attributes
 	private final String id;
@@ -56,12 +53,8 @@ public enum VerbConjugation {
 	private final String godanConjugation;
 	private final String ichidanConjugation;
 	private final String conjugationName;
-	private final String conjugationClass;
+	private final VerbConjugationClassification conjugationClass;
 	
-	private static final List<String> conjugationClasses =
-			Arrays.asList(new String[] {"Casual","Polite","Volitional",
-					"Hypothetical","Conditional","Conjunctive","Imperative",
-					"Passive & Causative","Tai","Others"});
 	private static final Map<String, VerbConjugation> conjugations;
 	private static final Map<String, String[]> godanInflections;
 	private static final Map<String, String[]> irregulars;
@@ -100,11 +93,15 @@ public enum VerbConjugation {
 	}
 
 	//Constructors
-	private VerbConjugation(String id,String godanForm, String godanConjugation, String conjugationName, String conjugationClass) {
+	//Constructor for conjugations whose ichidan conjugation is equal to the godan conjugation
+	private VerbConjugation(String id,String godanForm, String godanConjugation,
+			String conjugationName, VerbConjugationClassification conjugationClass) {
 		this(id, godanForm, godanConjugation, godanConjugation, conjugationName,conjugationClass);
 	}
 
-	private VerbConjugation(String id,String godanForm, String godanConjugation, String ichidanConjugation, String conjugationName, String conjugationClass) {
+	private VerbConjugation(String id,String godanForm, String godanConjugation,
+			String ichidanConjugation, String conjugationName,
+			VerbConjugationClassification conjugationClass) {
 		this.id = id;
 		this.godanForm = godanForm;
 		this.godanConjugation = godanConjugation;
@@ -150,6 +147,17 @@ public enum VerbConjugation {
 				.concat(irregulars.get(furigana.substring(furigana.length() - 2,furigana.length()))[this.ordinal()]);
 	}
 	
+	public static Map<String,List<VerbConjugation>> getClassifiedConjugations() {
+		VerbConjugationClassification[] classifications = VerbConjugationClassification.values();
+		Map<String,List<VerbConjugation>> map = new LinkedHashMap<>();
+		Stream.of(classifications).forEach(x -> map.put(x.getName(), new ArrayList<>()));
+		map.forEach((x,y) -> y.addAll(
+				Stream.of(VerbConjugation.values())
+				.filter(z -> z.conjugationClass.getName().equals(x))
+				.toList()));
+		return map;
+		
+	}
 	
 	//Getters
 	public String getId() {

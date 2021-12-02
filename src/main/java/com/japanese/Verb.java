@@ -8,10 +8,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
 import javax.persistence.Transient;
-
-import org.springframework.stereotype.Component;
 
 @Entity
 public class Verb {

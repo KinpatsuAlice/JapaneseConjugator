@@ -1,7 +1,6 @@
 package com.japanese;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 import javax.persistence.criteria.Predicate;
 

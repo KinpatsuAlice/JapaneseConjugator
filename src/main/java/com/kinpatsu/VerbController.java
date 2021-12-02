@@ -1,8 +1,6 @@
 package com.kinpatsu;
 
-import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.database.JacksonUnmarshaller;
-import com.database.Jmdict;
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.japanese.*;
-import static com.japanese.VerbSpecifications.*;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -37,7 +30,8 @@ public class VerbController {
 	
 	@GetMapping
 	public String showConjugations(Model model) {
-		model.addAttribute("verbConjugations", VerbConjugation.values());
+		//model.addAttribute("verbConjugations", VerbConjugation.values());
+		model.addAttribute("verbClassifications", VerbConjugation.getClassifiedConjugations());
 //		try {
 //			log.info("Esto va a petar");
 //			Jmdict dictionary = JacksonUnmarshaller.getDictionary();
@@ -58,8 +52,8 @@ public class VerbController {
 	
 	@PostMapping("/conjugation")
 	public @ResponseBody Verb getVerb(@RequestBody VerbSettings settings) {
-		//Verb verb = new Verb("脱ぐ","ぬぐ","GODAN", new String[] {"to undress"},true);
-		List<String> filters = Arrays.asList(settings.getFilters().split(":"));
+		List<String> filters = Arrays.asList(settings.getTypeFilters().split(":"));
+		Random randomGenerator = new Random();
 		Verb verb;
 		if (filters.get(0).isEmpty())
 			verb = verbRepository.getRandomVerb(1).get(0);
@@ -72,11 +66,11 @@ public class VerbController {
 		if(settings.getConjugations().isEmpty()) {
 			VerbConjugation[] conjugations = VerbConjugation.values();
 			int conjNum = conjugations.length;
-			verb.setConjugation(conjugations[new Random().nextInt(conjNum)].getId());	
+			verb.setConjugation(conjugations[randomGenerator.nextInt(conjNum)].getId());	
 		} else {
 			List<String> conjugationList = new ArrayList<>();
 			Stream.of(settings.getConjugations().split(":")).forEach(conjugationList::add);
-			verb.setConjugation(conjugationList.get(new Random().nextInt(conjugationList.size())));
+			verb.setConjugation(conjugationList.get(randomGenerator.nextInt(conjugationList.size())));
 		}
 		return verb;
 		/*TODO: Paso 1: Generar verbo concurrente (de momento con conj random(masu))

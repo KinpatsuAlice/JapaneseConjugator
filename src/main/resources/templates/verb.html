@@ -33,12 +33,21 @@
       </div>
       <fieldset>
         <legend>Conjugations</legend>
-          <div th:each="verbConjugation: ${verbConjugations}">
+        <div th:each="classification: ${verbClassifications}">
+        <fieldset>
+          <legend><span th:text="${classification.key}">text</span></legend>
+          <div th:each="conjugation: ${classification.value}">
+            <input type="checkbox" th:value="${conjugation.id}" class="conjugations">
+            <span th:text="${conjugation.conjugationName}">text</span><br>
+          </div>
+        </fieldset>
+        </div>
+          <!--<div th:each="verbConjugation: ${verbConjugations}">
             <input type="checkbox" th:value="${verbConjugation.id}" class="conjugations">
             <label class="form-check-label" for="flexCheckDefault">
               <span th:text="${verbConjugation.conjugationName}">text</span><br>
             </label>
-          </div>
+          </div>-->
       </fieldset>
       <fieldset>
         <legend>Settings</legend>
@@ -53,15 +62,15 @@
       </fieldset>
       <fieldset>
         <legend>Filters</legend>
-        <input type="checkbox" name="" value="ICHIDAN" class="filters">
+        <input type="checkbox" name="" value="ICHIDAN" class="typeFilters">
         Ichidan
-        <input type="checkbox" name="" value="GODAN" class="filters">
+        <input type="checkbox" name="" value="GODAN" class="typeFilters">
         Godan
-        <input type="checkbox" name="" value="IRREGULAR" class="filters">
+        <input type="checkbox" name="" value="IRREGULAR" class="typeFilters">
         Irregular &nbsp;
-        <input type="checkbox" name="" value="NO_EXPRESSION" class="filters">
+        <input type="checkbox" name="" id="noExpression">
         No expressions<br>
-        <input type="checkbox" name="" value="COMMON" class="filters">
+        <input type="checkbox" name="" id="onlyCommon">
         &nbsp;Only Common&nbsp;&nbsp;&nbsp;<br>
       </fieldset>
     </form>
@@ -128,7 +137,7 @@
       if(conjugation.checked)
         conjugations = conjugations.concat(conjugation.value,":");
     };
-    var selectedFilters = document.getElementsByClassName("filters");
+    var selectedFilters = document.getElementsByClassName("typeFilters");
     var filters = "";
     for(const filter of selectedFilters) {
       if(filter.checked)
@@ -136,7 +145,9 @@
     };
     let settings = {
       conjugations: conjugations.substring(0,conjugations.length-1),
-      filters: filters.substring(0,filters.length-1)
+      typeFilters: filters.substring(0,filters.length-1),
+      onlyCommon: document.getElementById("onlyCommon").checked,
+      noExpression: document.getElementById("noExpression").cheked
     }
     fetch("/verb/conjugation", {
     method: 'POST',
