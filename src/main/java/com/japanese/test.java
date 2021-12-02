@@ -10,8 +10,8 @@ public class test {
 	public static void main(String[] args) {
 		
 	
-		Adjective adj = new Adjective("寒い","さむい","i", new String[] {"Cold"});
-		adj.printAllConjugations();
+//		Adjective adj = new Adjective("寒い","さむい","i", new String[] {"Cold"});
+//		adj.printAllConjugations();
 //		AdjectiveConjugation.NEGATIVE_CONDITIONAL_FORM.showSteps(adj).forEach(System.out::println);
 //		System.out.println(Verb.changeVowel(c, Verb.A_FORM));
 //		System.out.println(Verb.changeVowel(c, Verb.I_FORM));

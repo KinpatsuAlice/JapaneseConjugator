@@ -60,6 +60,8 @@ public class Word {
 	public  Verb convertToVerb() {
 		VerbType verbType = VerbType.IRREGULAR;
 		boolean isTransitive = false;
+		boolean isCommon = this.getKanji().length == 0 ? this.getKana()[0].isCommon() : this.getKanji()[0].isCommon();
+		boolean isExpression = false;
 		for(String pos : this.getSense()[0].getPartOfSpeech()) {
 			switch(pos) {
 			case "v1":
@@ -83,8 +85,8 @@ public class Word {
 			}
 			if(pos.equals("vt"))
 				isTransitive = true;
-			else
-				isTransitive = false;
+			if(pos.equals("exp"))
+				isExpression = true;
 		}
 		List<String> gloss = new ArrayList<>();
 		for (Sense s : this.getSense())
@@ -92,13 +94,14 @@ public class Word {
 				gloss.add(g.getText());
 		String[] meanings = gloss.toArray(new String[0]);
 		Verb verb = new Verb((this.getKanji().length == 0 ? this.getKana()[0].getText() : this.getKanji()[0].getText()),this.getKana()[0].getText(),
-				verbType.toString(),meanings,isTransitive);
+				verbType.toString(),meanings,isTransitive,isCommon,isExpression);
 		return verb;
 	}
 	
 	public  Adjective convertToAdjective() {
 		AdjectiveType type = AdjectiveType.I;
-		
+		boolean isCommon = this.getKanji()[0].isCommon();
+		boolean isExpression = false;
 		for (String s: this.getSense()[0].getPartOfSpeech()) {
 			switch(s) {
 			case "adj-i":
@@ -114,7 +117,7 @@ public class Word {
 			for (Gloss g : s.getGloss())
 				gloss.add(g.getText());
 		String[] meanings = gloss.toArray(new String[0]);
-		Adjective adjective = new Adjective(this.getKanji()[0].getText(),this.getKana()[0].getText(),type.toString(),meanings);
+		Adjective adjective = new Adjective(this.getKanji()[0].getText(),this.getKana()[0].getText(),type.toString(),meanings,isCommon,isExpression);
 		return adjective;
 	}
 	

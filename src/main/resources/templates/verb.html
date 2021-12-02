@@ -26,7 +26,7 @@
         <br>
       </div>
       <div class="" id="score">
-        <p><span style="color:green">0</span>/<span style="color:red">0</span>/0</p>
+        <p><span style="color:green">0</span>/<span style="color:red">0</span>/0%</p>
       </div>
       <input type="text" id="answer" oninput="toKana(this)"><br>
       <div class="" id="correctAnswer">
@@ -54,11 +54,15 @@
       <fieldset>
         <legend>Filters</legend>
         <input type="checkbox" name="" value="ICHIDAN" class="filters">
-        Include Ichidan
+        Ichidan
         <input type="checkbox" name="" value="GODAN" class="filters">
-        Include Godan
+        Godan
         <input type="checkbox" name="" value="IRREGULAR" class="filters">
-        Include Irregular
+        Irregular &nbsp;
+        <input type="checkbox" name="" value="NO_EXPRESSION" class="filters">
+        No expressions<br>
+        <input type="checkbox" name="" value="COMMON" class="filters">
+        &nbsp;Only Common&nbsp;&nbsp;&nbsp;<br>
       </fieldset>
     </form>
   <a th:href="@{/}"><p class="text-center">Return to menu</p></a>
@@ -151,11 +155,9 @@
         document.getElementById("furigana").innerText = "";
       else
         document.getElementById("furigana").innerText = verb.furigana;
-        document.getElementById("verb").innerText = verb.word;
-        document.getElementById("verbType").innerText = verb.type;
-        document.getElementById("verbConjugation").innerText = verb.verbConjugation;
-
-
+      document.getElementById("verb").innerText = verb.word;
+      document.getElementById("verbType").innerText = verb.type;
+      document.getElementById("verbConjugation").innerText = verb.verbConjugation;
       var english = "";
       verb.meaning.forEach(x => english = english.concat(x + ", "));
       document.getElementById("english").innerText = english.substring(0,english.length-2);

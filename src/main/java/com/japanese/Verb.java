@@ -29,6 +29,10 @@ public class Verb {
 	
 	private boolean isTransitive;
 	
+	private boolean isCommon;
+	
+	private boolean isExpression;
+	
 	private String pitchAccent;
 	
 	@Transient
@@ -37,13 +41,17 @@ public class Verb {
 	@Transient
 	private String verbConjugation;
 	
+	//Constructors
+	
 	protected Verb() {}
 	
-	public Verb(String word, String furigana, String type, String[] meaning, boolean isTransitive) {
-		this(word, furigana, type, meaning, isTransitive,"");
+	public Verb(String word, String furigana, String type, String[] meaning,
+			boolean isTransitive, boolean isCommon, boolean isExpression) {
+		this(word, furigana, type, meaning, isTransitive,"",isCommon, isExpression);
 	}
 
-	public Verb(String word, String furigana, String type, String[] meaning, boolean isTransitive, String pitchAccent) {
+	public Verb(String word, String furigana, String type, String[] meaning,
+			boolean isTransitive, String pitchAccent, boolean isCommon, boolean isExpression) {
 		super();
 		this.word = word;
 		this.furigana = furigana;
@@ -51,7 +59,11 @@ public class Verb {
 		this.meaning = meaning;
 		this.isTransitive = isTransitive;
 		this.pitchAccent = pitchAccent;
+		this.isCommon = isCommon;
+		this.isExpression = isExpression;
 	}
+	
+	//Utility methods
 	
 	public String conjugate(String conj) {
 		if (this.type == VerbType.ICHIDAN) {
@@ -104,12 +116,11 @@ public class Verb {
 		this.verbConjugation = VerbConjugation.getVerbConjugation(conj).getConjugationName();
 	}
 	
-	
+	//Getters & Setters
 
 	public long getId() {
 		return id;
 	}
-
 
 	public String getWord() {
 		return word;
@@ -129,6 +140,14 @@ public class Verb {
 
 	public boolean isTransitive() {
 		return isTransitive;
+	}
+	
+	public boolean isCommon() {
+		return isCommon;
+	}
+
+	public boolean isExpression() {
+		return isExpression;
 	}
 
 	public String getPitchAccent() {

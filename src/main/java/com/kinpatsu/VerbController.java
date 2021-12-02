@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +23,7 @@ import com.database.Jmdict;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.japanese.*;
-import static com.japanese.VerbSpecifications.filterByVerbType;
+import static com.japanese.VerbSpecifications.*;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -63,8 +64,9 @@ public class VerbController {
 		if (filters.get(0).isEmpty())
 			verb = verbRepository.getRandomVerb(1).get(0);
 		else {
+			Specification<Verb> specs = settings.getSpecifications();
 			Pageable firstElement = PageRequest.of(0, 1);
-			Page<Verb> page = verbRepository.findAll(filterByVerbType(filters),firstElement);
+			Page<Verb> page = verbRepository.findAll(specs,firstElement);
 			verb = page.toList().get(0);
 		}
 		if(settings.getConjugations().isEmpty()) {

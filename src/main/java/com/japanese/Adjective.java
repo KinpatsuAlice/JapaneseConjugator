@@ -26,23 +26,31 @@ public class Adjective {
 	@Enumerated(EnumType.ORDINAL)
 	private AdjectiveType type;
 	
+	private boolean isCommon;
+	
+	private boolean isExpression;
+	
 	private String[] meaning;
 	
 	private String pitchAccent;
 
 	
 	
-	public Adjective(String word, String furigana, String type, String[] meaning) {
-		this(word,furigana,type,meaning,"");
+	public Adjective(String word, String furigana, String type,
+			String[] meaning, boolean isCommon, boolean isExpression) {
+		this(word,furigana,type,meaning,"",isCommon,isExpression);
 	}
 
-	public Adjective(String word, String furigana, String type, String[] meaning, String pitchAccent) {
+	public Adjective(String word, String furigana, String type, String[] meaning,
+			String pitchAccent, boolean isCommon, boolean isExpression) {
 		super();
 		this.word = word;
 		this.furigana = furigana;
 		this.type = AdjectiveType.valueOf(type.toUpperCase());
 		this.meaning = meaning;
 		this.pitchAccent = pitchAccent;
+		this.isCommon = isCommon;
+		this.isExpression = isExpression;
 	}
 	
 	public String toStemForm() {
@@ -68,6 +76,11 @@ public class Adjective {
 	}
 	
 	//Getters
+	
+	public long getId() {
+		return id;
+	}
+	
 	public String getWord() {
 		return word;
 	}
@@ -78,6 +91,14 @@ public class Adjective {
 
 	public AdjectiveType getType() {
 		return type;
+	}
+
+	public boolean isCommon() {
+		return isCommon;
+	}
+
+	public boolean isExpression() {
+		return isExpression;
 	}
 
 	public String[] getMeaning() {
