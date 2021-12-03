@@ -36,10 +36,9 @@ public class Verb {
 	private String conjugatedVerb;
 	
 	@Transient
-	private String verbConjugation;
+	private String conjugation;
 	
 	//Constructors
-	
 	protected Verb() {}
 	
 	public Verb(String word, String furigana, String type, String[] meaning,
@@ -110,7 +109,7 @@ public class Verb {
 	
 	public void setConjugation(String conj) {
 		this.conjugatedVerb = this.conjugate(conj);
-		this.verbConjugation = VerbConjugation.getVerbConjugation(conj).getConjugationName();
+		this.conjugation = VerbConjugation.getVerbConjugation(conj).getConjugationName();
 	}
 	
 	//Getters & Setters
@@ -155,8 +154,8 @@ public class Verb {
 		return conjugatedVerb;
 	}
 
-	public String getVerbConjugation() {
-		return verbConjugation;
+	public String getConjugation() {
+		return conjugation;
 	}
 	
 }

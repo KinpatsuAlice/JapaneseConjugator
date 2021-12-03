@@ -6,9 +6,9 @@ import javax.persistence.criteria.Predicate;
 
 import org.springframework.data.jpa.domain.Specification;
 
-public final class VerbSpecifications {
+public final class AdjectiveSpecifications {
 	
-	public static Specification<Verb> filterByVerbType(List<VerbType> filters) {
+	public static Specification<Adjective> filterByAdjectiveType(List<AdjectiveType> filters) {
 		return (root,query,builder) -> {
 				query.orderBy(builder.asc(builder.function("RAND", null)));
 				return builder.or(
@@ -18,13 +18,14 @@ public final class VerbSpecifications {
 		};
 	}
 	
-	public static Specification<Verb> filterByCommon() {
+	public static Specification<Adjective> filterByCommon() {
 		return (root,query,builder) ->
 			builder.isTrue(root.get("isCommon"));
 	}
 	
-	public static Specification<Verb> restrictExpressions() {
+	public static Specification<Adjective> restrictExpressions() {
 		return (root,query,builder) ->
 			builder.isFalse(root.get("isExpression"));
 	}
+
 }

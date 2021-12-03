@@ -4,39 +4,46 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.*;
 
+import net.bytebuddy.asm.Advice.This;
+
+import static com.japanese.AdjectiveConjugationClassification.*;
+
 public enum AdjectiveConjugation {
 	
-	NEGATIVE_FORM("Ne","くない","じゃない","Negative form"),
-	NEGATIVE_PAST_FORM("Ne-Pa","くなかった","じゃなかった","Negative Past form"),
-	PAST_FORM("Pa","かった","だった","Past form"),
-	
-	POLITE_FORM("Po","いです","です","Polite form"),
-	POLITE_NEGATIVE_FORM("Po-Ne","くないです","じゃありません","Polite Negative form"),
-	POLITE_NEGATIVE_PAST_FORM("Po-Ne-Pa","くなかったです","じゃありまんせんでした","Polite Negative Past form"),
-	POLITE_PAST_FORM("Po-Pa","かったです","でした","Polite Past form"),
-	
-	CONJUNCTIVE_FORM("Conj","くて","で","Conjunctive form"),
-	NEGATIVE_CONJUNCTIVE_FORM("Ne-Conj","くなくて","じゃなくて","Negative Conjunctive form"),
-	
-	SOU_FORM("Sou","そう","そう","そう form"),
-	POLITE_SOU_FORM("Po-Sou","そうです","そうです","Polite そう form"),
-	
-	CONDITIONAL_FORM("Cond","かったら","だったら","Conditional form"),
-	NEGATIVE_CONDITIONAL_FORM("Ne-Cond","くなかったら","じゃなかったら","Negative Conditional form"),
-	
-	HYPOTHETICAL_FORM("Hy","ければ","であれば","Hypothetical form"),
-	NEGATIVE_HYPOTHETICAL_FORM("Ne-Hy","くなければ","でなければ","Negative Hypothetical form"),
-	
-	ADVERBIAL_FORM("Adv","く","に","Adverbial form"),
-	
-	NOUN_FORM("Noun","さ","さ","Noun form"),
-	SUGIRU_FORM("Sugi","すぎる","すぎる","すぎる form");
+	//Casual form
+	NEGATIVE_FORM("Ne","くない","じゃない","Negative form",CASUAL),
+	NEGATIVE_PAST_FORM("Ne-Pa","くなかった","じゃなかった","Negative Past form",CASUAL),
+	PAST_FORM("Pa","かった","だった","Past form",CASUAL),
+	//Polite form
+	POLITE_FORM("Po","いです","です","Polite form",POLITE),
+	POLITE_NEGATIVE_FORM("Po-Ne","くないです","じゃありません","Polite Negative form",POLITE),
+	POLITE_NEGATIVE_PAST_FORM("Po-Ne-Pa","くなかったです","じゃありまんせんでした","Polite Negative Past form",POLITE),
+	POLITE_PAST_FORM("Po-Pa","かったです","でした","Polite Past form",POLITE),
+	//Conjunctive form
+	CONJUNCTIVE_FORM("Conj","くて","で","Conjunctive form",CONJUNCTIVE),
+	NEGATIVE_CONJUNCTIVE_FORM("Ne-Conj","くなくて","じゃなくて","Negative Conjunctive form",CONJUNCTIVE),
+	//Sou form
+	SOU_FORM("Sou","そう","そう","そう form",SOU),
+	POLITE_SOU_FORM("Po-Sou","そうです","そうです","Polite そう form",SOU),
+	//Conditional form
+	CONDITIONAL_FORM("Cond","かったら","だったら","Conditional form",CONDITIONAL),
+	NEGATIVE_CONDITIONAL_FORM("Ne-Cond","くなかったら","じゃなかったら","Negative Conditional form",CONDITIONAL),
+	//Hypothetical form
+	HYPOTHETICAL_FORM("Hy","ければ","であれば","Hypothetical form",HYPOTHETICAL),
+	NEGATIVE_HYPOTHETICAL_FORM("Ne-Hy","くなければ","でなければ","Negative Hypothetical form",HYPOTHETICAL),
+	//Adverbial form
+	ADVERBIAL_FORM("Adv","く","に","Adverbial form",ADVERBIAL),
+	//Others
+	NOUN_FORM("Noun","さ","さ","Noun form",OTHERS),
+	SUGIRU_FORM("Sugi","すぎる","すぎる","すぎる form",OTHERS);
 	
 	//Enum attributes
-	String id;
-	String iConjugation;
-	String naConjugation;
-	String conjugationName;
+	private String id;
+	private String iConjugation;
+	private String naConjugation;
+	private String conjugationName;
+	private AdjectiveConjugationClassification conjugationClass;
+	
 	
 	private static final Map<String, AdjectiveConjugation> conjugations;
 	
@@ -47,11 +54,13 @@ public enum AdjectiveConjugation {
 		conjugations = Collections.unmodifiableMap(map);
 	}
 	
-	private AdjectiveConjugation(String id, String iConjugation, String naConjugation, String conjugationName) {
+	private AdjectiveConjugation(String id, String iConjugation, String naConjugation,
+			String conjugationName, AdjectiveConjugationClassification conjugationClass) {
 		this.id = id;
 		this.iConjugation = iConjugation;
 		this.naConjugation = naConjugation;
 		this.conjugationName = conjugationName;
+		this.conjugationClass = conjugationClass;
 	}
 	
 	public static AdjectiveConjugation getAdjectiveConjugation(String s) {
@@ -72,7 +81,19 @@ public enum AdjectiveConjugation {
 		steps.add(adjectiveSteps.get(0) + " -> " + adjectiveSteps.get(1));
 		return steps;
 	}
+	
+	public static Map<String,List<AdjectiveConjugation>> getClassifiedConjugations() {
+		AdjectiveConjugationClassification[] classifications = AdjectiveConjugationClassification.values();
+		Map<String,List<AdjectiveConjugation>> map = new LinkedHashMap<>();
+		Stream.of(classifications).forEach(x -> map.put(x.getName(), new ArrayList<>()));
+		map.forEach((x,y) -> y.addAll(
+				Stream.of(AdjectiveConjugation.values())
+				.filter(z -> z.conjugationClass.getName().equals(x))
+				.toList()));
+		return map;
+	}
 
+	//Getters
 	public String getId() {
 		return id;
 	}
@@ -88,6 +109,11 @@ public enum AdjectiveConjugation {
 	public String getConjugationName() {
 		return conjugationName;
 	}
+
+	public AdjectiveConjugationClassification getConjugationClass() {
+		return conjugationClass;
+	}
+	
 	
 	
 	

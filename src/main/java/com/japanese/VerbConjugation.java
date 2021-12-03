@@ -156,7 +156,6 @@ public enum VerbConjugation {
 				.filter(z -> z.conjugationClass.getName().equals(x))
 				.toList()));
 		return map;
-		
 	}
 	
 	//Getters

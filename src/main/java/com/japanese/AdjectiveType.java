@@ -1,7 +1,7 @@
 package com.japanese;
 
 public enum AdjectiveType {
-	I("い"),NA("な");
+	I("い"),NA("な"),IRREGULAR("良い");
 	
 	private String hiragana;
 

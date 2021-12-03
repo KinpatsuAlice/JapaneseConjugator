@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.Transient;
 
 @Entity
 public class Adjective {
@@ -33,8 +34,15 @@ public class Adjective {
 	private String[] meaning;
 	
 	private String pitchAccent;
-
 	
+	@Transient
+	private String conjugatedAdjective;
+	
+	@Transient
+	private String conjugation;
+
+	//Constructors
+	protected Adjective() {}
 	
 	public Adjective(String word, String furigana, String type,
 			String[] meaning, boolean isCommon, boolean isExpression) {
@@ -75,8 +83,12 @@ public class Adjective {
 			.forEach(x -> System.out.println(this.toStemForm().concat(x.getNaConjugation())));
 	}
 	
-	//Getters
+	public void setConjugation(String conj) {
+		this.conjugatedAdjective = this.conjugate(conj);
+		this.conjugation = AdjectiveConjugation.getAdjectiveConjugation(conj).getConjugationName();
+	}
 	
+	//Getters
 	public long getId() {
 		return id;
 	}
@@ -108,7 +120,12 @@ public class Adjective {
 	public String getPitchAccent() {
 		return pitchAccent;
 	}
-	
-	
 
+	public String getConjugatedAdjective() {
+		return conjugatedAdjective;
+	}
+
+	public String getConjugation() {
+		return conjugation;
+	}
 }

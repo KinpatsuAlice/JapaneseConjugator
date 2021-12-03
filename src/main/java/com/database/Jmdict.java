@@ -62,6 +62,7 @@ public class Jmdict {
 				switch(s) {
 				case "adj-i":
 				case "adj-na":
+				case "adj-ix":
 					adjectives.add(w);
 				}
 			}

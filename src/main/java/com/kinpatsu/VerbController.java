@@ -30,7 +30,6 @@ public class VerbController {
 	
 	@GetMapping
 	public String showConjugations(Model model) {
-		//model.addAttribute("verbConjugations", VerbConjugation.values());
 		model.addAttribute("verbClassifications", VerbConjugation.getClassifiedConjugations());
 //		try {
 //			log.info("Esto va a petar");
@@ -52,10 +51,9 @@ public class VerbController {
 	
 	@PostMapping("/conjugation")
 	public @ResponseBody Verb getVerb(@RequestBody VerbSettings settings) {
-		List<String> filters = Arrays.asList(settings.getTypeFilters().split(":"));
 		Random randomGenerator = new Random();
 		Verb verb;
-		if (filters.get(0).isEmpty())
+		if (settings.getTypeFilters().isEmpty())
 			verb = verbRepository.getRandomVerb(1).get(0);
 		else {
 			Specification<Verb> specs = settings.getSpecifications();

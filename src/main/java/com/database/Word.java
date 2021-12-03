@@ -100,7 +100,7 @@ public class Word {
 	
 	public  Adjective convertToAdjective() {
 		AdjectiveType type = AdjectiveType.I;
-		boolean isCommon = this.getKanji()[0].isCommon();
+		boolean isCommon = this.getKanji().length == 0 ? this.getKana()[0].isCommon() : this.getKanji()[0].isCommon();
 		boolean isExpression = false;
 		for (String s: this.getSense()[0].getPartOfSpeech()) {
 			switch(s) {
@@ -108,16 +108,20 @@ public class Word {
 				type = AdjectiveType.I;
 				break;
 			case "adj-na":
-				type = AdjectiveType.NA;
+				type = AdjectiveType.NA;	
 				break;
+			case "adj-ix":
+				type = AdjectiveType.IRREGULAR;	
 			}
+			if(s.equals("exp"))
+				isExpression = true;
 		}
 		List<String> gloss = new ArrayList<>();
 		for (Sense s : this.getSense())
 			for (Gloss g : s.getGloss())
 				gloss.add(g.getText());
 		String[] meanings = gloss.toArray(new String[0]);
-		Adjective adjective = new Adjective(this.getKanji()[0].getText(),this.getKana()[0].getText(),type.toString(),meanings,isCommon,isExpression);
+		Adjective adjective = new Adjective((this.getKanji().length == 0 ? this.getKana()[0].getText() : this.getKanji()[0].getText()),this.getKana()[0].getText(),type.toString(),meanings,isCommon,isExpression);
 		return adjective;
 	}
 	
