@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather&family=Work+Sans&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+
+}
+
+.cover {
+    height: 100vh;
+    background-image: url(../img/jpn-culture-cover.jpg);
+
+    color: white;
+    background-size: cover;
+    background-position: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    background-blend-mode: darken;
+}
+
+a {
+    text-decoration: none;
+}
+
+.texto-centrado {
+    text-align: center;
+}
+
+p {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 20px;
+    text-align: center;
+}
+
+p span {
+    font-size: 30px;
+}
+
+.principal-card {
+    border-radius: 20px;
+}
+
+.img-logo {
+    max-width: 500px;
+    border-radius: 10px;
+    display: block;
+}

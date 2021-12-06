@@ -1,14 +1,51 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <meta charset="utf-8">
-    <title>Katsudou</title>
-  </head>
-  <body>
-    <h1>Welcome to Katsudou, the best online Japanese conjugator practice tool that has ever existed</h1><br>
-    <a th:href="@{/verb}">Verb Practice</a><br>
-    <a th:href="@{/adjective}">Adjective Practice</a><br>
-    <a th:href="@{/counter}">Counter Practice (Coming soon)</a><br>
-  </body>
+
+<head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <meta charset="utf-8">
+  <title>Katsudou</title>
+  <link th:href="@{/css/bootstrap.css}" rel="stylesheet" href="../static/css/bootstrap.css">
+  <link th:href="@{/css/styles.css}" rel="stylesheet" href="../static/css/styles.css">
+</head>
+
+<body>
+
+  <div class="container-fluid cover d-flex justify-content-center align-items-center flex-column">
+    <div class="principal-card ">
+      <div class="row">
+
+        <div class="col-md-6 d-flex justify-content-center align-items-center flex-column">
+          <p>Welcome to <span>Katsudou</span>, the best online Japanese conjugator practice tool that has ever existed
+          </p>
+
+
+          <div class="row ">
+            <div class="col-md-3">
+              <a th:href="@{/verb}" href="#" class="btn btn-primary">Verb Practice</a>
+            </div>
+
+            <div class="col-md-4">
+              <a th:href="@{/adjective}" href="#" class="btn btn-primary">Adjective Practice</a>
+            </div>
+
+            <div class="col-md-4">
+              <a th:href="@{/counter}" href="#" class="btn btn-primary">Counter Practice (Coming soon)</a>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <img class="img-logo" src="../static/img/logo-sin-fondo.png" alt="">
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script th:src="@{/js/bootstrap.bundle.js}" src="../static/js/bootstrap.bundle.js"></script>
+</body>
+
 </html>
