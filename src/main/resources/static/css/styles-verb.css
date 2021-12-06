@@ -1,0 +1,17 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    /* background-color: #F0A5C4; */
+}
+
+.verbo-actual {
+    background-color: #E7E7E7;
+}
+
+.verbo-actual p {
+    font-size: 30px;
+}
