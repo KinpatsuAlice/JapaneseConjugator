@@ -9,6 +9,11 @@ public class test {
 
 	public static void main(String[] args) {
 		
+		VerbConjugation[] arr = VerbConjugation.values();
+		
+		for(VerbConjugation a : arr)
+			System.out.println("exceptions.get(\"くる\").put(" + a.name() + ",\"しない\");");
+		
 	
 //		Adjective adj = new Adjective("寒い","さむい","i", new String[] {"Cold"});
 //		adj.printAllConjugations();

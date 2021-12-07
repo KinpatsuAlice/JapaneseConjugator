@@ -7,6 +7,35 @@
 
 }
 
+*, *:before, *:after{
+    box-sizing: inherit;
+}
+
+/* Global Style */
+
+html{
+	font-size: 62.5%;
+	box-sizing: border-box;    
+}
+
+
+body{
+    font-size: 1.6rem;
+    background-color: #1a1b26;
+    color: #c0caf5;
+}
+
+
+/* Utilities */
+
+.p-3{
+    padding: 3rem;
+}
+
+.transparecy-20{
+    background-color: #24283b;
+}
+
 .cover {
     height: 100vh;
     background-image: url(../img/jpn-culture-cover.jpg);
@@ -44,4 +73,93 @@ p span {
     max-width: 500px;
     border-radius: 10px;
     display: block;
+}
+
+
+.flex-cards{
+    display: flex;
+    justify-content: space-around;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.flex{
+    display: flex;
+    margin: 0 auto;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/*
+.gtc-3{
+    display: grid;
+    grid-template-columns: 1fr;
+    margin: 1rem;   
+}
+
+	
+@media (min-width: 480px){
+    .gtc-3{
+        grid-template-columns: repeat(2, 1fr);
+    }
+		    	    
+}
+
+@media (min-width: 720px){
+    .gtc-3{
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 1200px){
+    .gtc-3{
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+	
+*/
+
+
+.container{
+    max-width: 80%;
+}
+
+.kbtn{
+    display: block;
+    padding: 1rem 2rem;
+    border-radius: 1rem;
+} 
+
+.kbtn-primary{
+  	background-color: #A26B8F;
+  	color: white; 
+  	transition: 1s; 
+}
+
+.kbtn-primary:hover{
+	background-color: #D5BABF;
+  	color: white;      
+}
+
+.inner-card-space{
+    flex-basis: calc(100% - 1rem);
+    padding: 1rem; 
+}
+
+@media (min-width: 320px){
+	.inner-card-space{
+ 	   flex-basis: calc(50% - 1rem);
+    }     
+}
+
+@media (min-width: 480px){
+	.inner-card-space{
+ 	   flex-basis: calc(33% - 1rem);
+    }     
+}
+
+@media (min-width: 720px){
+	.inner-card-space{
+ 	   flex-basis: calc(25% - 1rem);
+    }     
 }

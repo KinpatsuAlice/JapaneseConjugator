@@ -36,6 +36,11 @@ public enum VerbConjugation {
 	//Imperative form
 	NEGATIVE_IMPERATIVE_FORM("Ne-Im","う","な","Negative Imperative",IMPERATIVE),
 	POLITE_IMPERATIVE_FORM("Po-Im","い","なさい","Polite Imperative",IMPERATIVE),
+	//Potential form
+	POTENTIAL_FORM("Pt","え","る","られる","Potential form",POTENTIAL),
+	NEGATIVE_POTENTIAL_FORM("Ne-Pt","え","ない","られない","Negative Potential form",POTENTIAL),
+	NEGATIVE_PAST_POTENTIAL_FORM("Ne-Pa-Pt","え","ない","られない","Negative Past Potential form",POTENTIAL),
+	PAST_POTENTIAL_FORM("Pa-Pt","え","た","られた","Past Potential form",POTENTIAL),
 	//Passive form
 	PASSIVE_FORM("Ps","あ","れる","られる","Passive form",PASSIVE_CAUSATIVE),
 	//Causative form
@@ -57,7 +62,7 @@ public enum VerbConjugation {
 	
 	private static final Map<String, VerbConjugation> conjugations;
 	private static final Map<String, String[]> godanInflections;
-	private static final Map<String, String[]> irregulars;
+	private static final Map<String, Map<VerbConjugation,String>> irregulars;
 	
 	static {
 		List<VerbConjugation> conjugationList = Arrays.asList(VerbConjugation.values());
@@ -82,14 +87,15 @@ public enum VerbConjugation {
 		godanInflections = Collections.unmodifiableMap(inflections);
 		
 		//Exceptions Map Initialization
-		Map<String, String[]> exceptions = new HashMap<>();
+		/*Map<String, String[]> exceptions = new HashMap<>();
 		exceptions.put("くる",new String[] {"こない","こなかった","きた","きます","きません","きませんでした","きました","こよう","きましょう"
 				,"きれば","こなければ","きたら","こなかったら","きませんでしたら","きましたら","きて","こないで","きまして","きませんで","くるな","きなさい"
 				,"こられる","こされる","きたい","きたくない","きたくなかった","きたかった","きすぎる"});
 		exceptions.put("する", new String[] {"しない","しなかった","した","します","しません","しませんでした","しました","しよう","しましょう",
 				"すれば","しなければ","したら","しなかったら","しませんでしたら","しましたら","して","しないで","しまして","しませんで","するな","しなさい"
 				,"される","させる","したい","したくない","したくなかった","したかった","しすぎる"});
-		irregulars = Collections.unmodifiableMap(exceptions);
+		irregulars = Collections.unmodifiableMap(exceptions);*/
+		irregulars = Collections.unmodifiableMap(initIrregulars());
 	}
 
 	//Constructors
@@ -110,6 +116,78 @@ public enum VerbConjugation {
 		this.conjugationClass = conjugationClass;
 	}
 
+	
+	public static Map<String, Map<VerbConjugation,String>> initIrregulars() {
+		Map<String, Map<VerbConjugation,String>> exceptions = new HashMap<>();
+		//する
+		exceptions.put("する",new HashMap<>());
+		exceptions.get("する").put(NEGATIVE_FORM,"しない");
+		exceptions.get("する").put(NEGATIVE_PAST_FORM,"しなかった");
+		exceptions.get("する").put(PAST_FORM,"した");
+		exceptions.get("する").put(POLITE_FORM,"します");
+		exceptions.get("する").put(POLITE_NEGATIVE_FORM,"しません");
+		exceptions.get("する").put(POLITE_NEGATIVE_PAST_FORM,"しませんでした");
+		exceptions.get("する").put(POLITE_PAST_FORM,"しました");
+		exceptions.get("する").put(VOLITIONAL_FORM,"しよう");
+		exceptions.get("する").put(POLITE_VOLITIONAL_FORM,"しましょう");
+		exceptions.get("する").put(HYPOTHETICAL_FORM,"すれば");
+		exceptions.get("する").put(NEGATIVE_HYPOTHETICAL_FORM,"しなければ");
+		exceptions.get("する").put(CONDITIONAL_FORM,"したら");
+		exceptions.get("する").put(NEGATIVE_CONDITIONAL_FORM,"しなかったら");
+		exceptions.get("する").put(POLITE_NEGATIVE_CONDITIONAL_FORM,"しませんでしたら");
+		exceptions.get("する").put(POLITE_CONDITIONAL_FORM,"しましたら");
+		exceptions.get("する").put(CONJUNCTIVE_FORM,"して");
+		exceptions.get("する").put(NEGATIVE_CONJUNCTIVE_FORM,"しないで");
+		exceptions.get("する").put(POLITE_CONJUNCTIVE_FORM,"しまして");
+		exceptions.get("する").put(POLITE_NEGATIVE_CONJUNCTIVE_FORM,"しませんｄえ");
+		exceptions.get("する").put(NEGATIVE_IMPERATIVE_FORM,"するな");
+		exceptions.get("する").put(POLITE_IMPERATIVE_FORM,"しなさい");
+		exceptions.get("する").put(POTENTIAL_FORM,"できる");
+		exceptions.get("する").put(NEGATIVE_POTENTIAL_FORM,"できない");
+		exceptions.get("する").put(NEGATIVE_PAST_POTENTIAL_FORM,"できなかった");
+		exceptions.get("する").put(PAST_POTENTIAL_FORM,"できた");
+		exceptions.get("する").put(PASSIVE_FORM,"される");
+		exceptions.get("する").put(CAUSATIVE_FORM,"させる");
+		exceptions.get("する").put(TAI_FORM,"したい");
+		exceptions.get("する").put(NEGATIVE_TAI_FORM,"したくない");
+		exceptions.get("する").put(NEGATIVE_PAST_TAI_FORM,"したくなかった");
+		exceptions.get("する").put(PAST_TAI_FORM,"したかった");
+		exceptions.get("する").put(SUGIRU_FORM,"しすぎる");
+		exceptions.put("くる",new HashMap<>());
+		exceptions.get("くる").put(NEGATIVE_FORM,"こない");
+		exceptions.get("くる").put(NEGATIVE_PAST_FORM,"こなかった");
+		exceptions.get("くる").put(PAST_FORM,"きた");
+		exceptions.get("くる").put(POLITE_FORM,"きます");
+		exceptions.get("くる").put(POLITE_NEGATIVE_FORM,"きません");
+		exceptions.get("くる").put(POLITE_NEGATIVE_PAST_FORM,"きませんでした");
+		exceptions.get("くる").put(POLITE_PAST_FORM,"きました");
+		exceptions.get("くる").put(VOLITIONAL_FORM,"こよう");
+		exceptions.get("くる").put(POLITE_VOLITIONAL_FORM,"きましょう");
+		exceptions.get("くる").put(HYPOTHETICAL_FORM,"くれば");
+		exceptions.get("くる").put(NEGATIVE_HYPOTHETICAL_FORM,"こなければ");
+		exceptions.get("くる").put(CONDITIONAL_FORM,"きたら");
+		exceptions.get("くる").put(NEGATIVE_CONDITIONAL_FORM,"こなかったら");
+		exceptions.get("くる").put(POLITE_NEGATIVE_CONDITIONAL_FORM,"きませんでしたら");
+		exceptions.get("くる").put(POLITE_CONDITIONAL_FORM,"きましたら");
+		exceptions.get("くる").put(CONJUNCTIVE_FORM,"きて");
+		exceptions.get("くる").put(NEGATIVE_CONJUNCTIVE_FORM,"こないで");
+		exceptions.get("くる").put(POLITE_CONJUNCTIVE_FORM,"きまして");
+		exceptions.get("くる").put(POLITE_NEGATIVE_CONJUNCTIVE_FORM,"きませんで");
+		exceptions.get("くる").put(NEGATIVE_IMPERATIVE_FORM,"くるな");
+		exceptions.get("くる").put(POLITE_IMPERATIVE_FORM,"きなさい");
+		exceptions.get("くる").put(POTENTIAL_FORM,"こられる");
+		exceptions.get("くる").put(NEGATIVE_POTENTIAL_FORM,"こられない");
+		exceptions.get("くる").put(NEGATIVE_PAST_POTENTIAL_FORM,"こられなかった");
+		exceptions.get("くる").put(PAST_POTENTIAL_FORM,"こられた");
+		exceptions.get("くる").put(PASSIVE_FORM,"こられる");
+		exceptions.get("くる").put(CAUSATIVE_FORM,"こさせる");
+		exceptions.get("くる").put(TAI_FORM,"きたい");
+		exceptions.get("くる").put(NEGATIVE_TAI_FORM,"きたくない");
+		exceptions.get("くる").put(NEGATIVE_PAST_TAI_FORM,"きたくなかった");
+		exceptions.get("くる").put(PAST_TAI_FORM,"きたかった");
+		exceptions.get("くる").put(SUGIRU_FORM,"きすぎる");
+		return exceptions;
+	}
 	public void printSteps(Verb verb) {
 		
 	}
@@ -144,7 +222,7 @@ public enum VerbConjugation {
 	public String getIrregularConjugation(Verb verb) {
 		String furigana = verb.getFurigana();
 		return furigana.substring(0,furigana.length() - 2)
-				.concat(irregulars.get(furigana.substring(furigana.length() - 2,furigana.length()))[this.ordinal()]);
+				.concat(irregulars.get(furigana.substring(furigana.length() - 2,furigana.length())).get(this));
 	}
 	
 	public static Map<String,List<VerbConjugation>> getClassifiedConjugations() {

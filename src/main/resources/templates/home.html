@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 
 <head>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
     integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
   <meta charset="utf-8">
   <title>Katsudou</title>
-  <link th:href="@{/css/bootstrap.css}" rel="stylesheet" href="../static/css/bootstrap.css">
-  <link th:href="@{/css/styles.css}" rel="stylesheet" href="../static/css/styles.css">
+  <link th:href="@{/css/bootstrap.css}" rel="stylesheet">
+  <link th:href="@{/css/styles.css}" rel="stylesheet">
 </head>
 
 <body>
@@ -38,14 +39,14 @@
         </div>
 
         <div class="col-md-6">
-          <img class="img-logo" src="../static/img/logo-sin-fondo.png" alt="">
+          <img class="img-logo" th:src="@{img/logo-sin-fondo.png}" alt="">
         </div>
 
       </div>
     </div>
   </div>
 
-  <script th:src="@{/js/bootstrap.bundle.js}" src="../static/js/bootstrap.bundle.js"></script>
+  <script th:src="@{js/bootstrap.bundle.js}"></script>
 </body>
 
 </html>

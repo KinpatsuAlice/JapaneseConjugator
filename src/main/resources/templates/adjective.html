@@ -7,6 +7,7 @@
     <script th:src="@{/js/answersUtility.js}"></script>
     <meta charset="utf-8">
     <title>Katsudou - Adjective Conjugation</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
   </head>
   <body>
     <h1 class="text-center">Adjective Conjugation Practice</h1>
@@ -14,10 +15,10 @@
       <div class="" id="adjectiveConjugation">
         <br>
       </div>
-      <div class="" id="furigana">
+      <div class="transparecy-20 p-3" id="furigana">
         <br>
       </div>
-      <div class="" id="adjective">
+      <div class="transparecy-20 p-3" id="adjective">
         <br>
       </div>
       <div class="" id="adjectiveType">
@@ -32,42 +33,54 @@
       <input type="text" id="answer" oninput="toKana(this)"><br>
       <div class="" id="correctAnswer">
       </div>
+      <div class="container"> 
+      <div class="flex-cards">
+	      <fieldset>
+	        <legend>Settings</legend>
+	        <input type="checkbox" name="" value="furigana" onchange="changeSettings(this)">
+	        Hide furigana
+	        <input type="checkbox" name="" value="adjectiveType" onchange="changeSettings(this)">
+	        Hide type
+	        <input type="checkbox" name="" value="english" onchange="changeSettings(this);">
+	        Hide English
+	        <input type="checkbox" name="" value="score" onchange="changeSettings(this);">
+	        Hide score
+	      </fieldset>
+	      <fieldset>
+	        <legend>Filters</legend>
+	        <input type="checkbox" name="" value="I" class="typeFilters">
+	        	い Adjective
+	        <input type="checkbox" name="" value="NA" class="typeFilters">
+	        	な Adjective
+	        <input type="checkbox" name="" id="noExpression">
+	        No expressions<br>
+	        <input type="checkbox" name="" id="onlyCommon">
+	        &nbsp;Only Common&nbsp;&nbsp;&nbsp;<br>
+	      </fieldset>
+      </div>
+      <h2>Conjugations</h2>
       <fieldset>
-        <legend>Conjugations</legend>
-        <div th:each="classification: ${adjectiveClassifications}">
-        <fieldset>
-          <legend><span th:text="${classification.key}">text</span></legend>
-          <div th:each="conjugation: ${classification.value}">
-            <input type="checkbox" th:value="${conjugation.id}" class="conjugations">
-            <span th:text="${conjugation.conjugationName}">text</span><br>
-          </div>
-        </fieldset>
+       <div class="flex-cards">
+	        <div class="inner-card-space" th:each="classification: ${adjectiveClassifications}">
+	        <fieldset>
+	          <h3><span th:text="${classification.key}">text</span></h3>
+	          <div th:each="conjugation: ${classification.value}">
+	            <input type="checkbox" th:value="${conjugation.id}" class="conjugations">
+	            <span th:text="${conjugation.conjugationName}">text</span><br>
+	          </div>
+	        </fieldset>
+	        </div>
         </div>
       </fieldset>
-      <fieldset>
-        <legend>Settings</legend>
-        <input type="checkbox" name="" value="furigana" onchange="changeSettings(this)">
-        Hide furigana
-        <input type="checkbox" name="" value="adjectiveType" onchange="changeSettings(this)">
-        Hide type
-        <input type="checkbox" name="" value="english" onchange="changeSettings(this);">
-        Hide English
-        <input type="checkbox" name="" value="score" onchange="changeSettings(this);">
-        Hide score
-      </fieldset>
-      <fieldset>
-        <legend>Filters</legend>
-        <input type="checkbox" name="" value="I" class="typeFilters">
-        い Adjective
-        <input type="checkbox" name="" value="NA" class="typeFilters">
-        な Adjective
-        <input type="checkbox" name="" id="noExpression">
-        No expressions<br>
-        <input type="checkbox" name="" id="onlyCommon">
-        &nbsp;Only Common&nbsp;&nbsp;&nbsp;<br>
-      </fieldset>
+      </div>
     </form>
-  <a th:href="@{/}"><p class="text-center">Return to menu</p></a>
+  <div class="d-flex justify-content-center mb-4">
+          <a th:href="@{/}"><p class="kbtn kbtn-primary ">Return to menu</p></a>
+	</div>
+  
+  
+  
+  
   <script type="text/javascript">
   window.onload = (event) => {
     getNewAdjective();

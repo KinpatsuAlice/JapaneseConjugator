@@ -2,74 +2,123 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
   <head>
+    <style id="stndz-style"></style>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script type="text/javascript" src="https://unpkg.com/wanakana@4.0.2/umd/wanakana.min.js"></script>
     <script th:src="@{/js/answersUtility.js}"></script>
     <meta charset="utf-8">
     <title>Katsudou - Verb Conjugation</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
   </head>
   <body>
-    <h1 class="text-center">Verb Conjugation Practice</h1>
-    <form class="text-center" onsubmit="checkAnswer()" method="get" id="answerForm" autocomplete="off">
-      <div class="" id="verbConjugation">
-        <br>
-      </div>
-      <div class="" id="furigana">
-        <br>
-      </div>
-      <div class="" id="verb">
-        <br>
-      </div>
-      <div class="" id="verbType">
-        <br>
-      </div>
-      <div class="" id="english">
-        <br>
-      </div>
-      <div class="" id="score">
-        <p><span style="color:green">0</span>/<span style="color:red">0</span>/0%</p>
-      </div>
-      <input type="text" id="answer" oninput="toKana(this)"><br>
-      <div class="" id="correctAnswer">
-      </div>
-      <fieldset>
-        <legend>Conjugations</legend>
-        <div th:each="classification: ${verbClassifications}">
-        <fieldset>
-          <legend><span th:text="${classification.key}">text</span></legend>
-          <div th:each="conjugation: ${classification.value}">
-            <input type="checkbox" th:value="${conjugation.id}" class="conjugations">
-            <span th:text="${conjugation.conjugationName}">text</span><br>
+    <body class="bg-light">
+      <div class="container-fluid">
+
+          <!-- Page Title -->
+        <div class="row">
+          <div class="col-md-12">
+            <h1 class="text-center">Verb Conjugation Practice</h1>
           </div>
-        </fieldset>
         </div>
-      </fieldset>
-      <fieldset>
-        <legend>Settings</legend>
-        <input type="checkbox" name="" value="furigana" onchange="changeSettings(this)">
-        Hide furigana
-        <input type="checkbox" name="" value="verbType" onchange="changeSettings(this)">
-        Hide type
-        <input type="checkbox" name="" value="english" onchange="changeSettings(this);">
-        Hide English
-        <input type="checkbox" name="" value="score" onchange="changeSettings(this);">
-        Hide score
-      </fieldset>
-      <fieldset>
-        <legend>Filters</legend>
-        <input type="checkbox" name="" value="ICHIDAN" class="typeFilters">
-        Ichidan
-        <input type="checkbox" name="" value="GODAN" class="typeFilters">
-        Godan
-        <input type="checkbox" name="" value="IRREGULAR" class="typeFilters">
-        Irregular &nbsp;
-        <input type="checkbox" name="" id="noExpression">
-        No expressions<br>
-        <input type="checkbox" name="" id="onlyCommon">
-        &nbsp;Only Common&nbsp;&nbsp;&nbsp;<br>
-      </fieldset>
-    </form>
-  <a th:href="@{/}"><p class="text-center">Return to menu</p></a>
+          <!-- /Page Title -->
+    <form class="text-center" onsubmit="checkAnswer()" method="get" id="answerForm" autocomplete="off">
+
+      <!-- Verbo a conjugar y todas las especificaciones -->
+
+      <!-- Opciones -->
+      <div class="row">
+        <div class="" id="verbConjugation"></div>
+        <div class="" id="furigana"></div>
+        <div class="verbo-div" id="verb"></div>
+        <div class="" id="verbType"></div>
+        <div class="" id="english"></div>
+        <div class="" id="score">
+          <p><span style="color:green">0</span>/<span style="color:red">0</span>/0%</p>
+        </div>
+        <div class="input-verb">
+          <input type="text" id="answer" oninput="toKana(this)" class="form-control"><br>
+        </div>
+        <div class="" id="correctAnswer"></div>
+      </div>
+      <!-- /Verbo a conjugar y todas las especificaciones -->
+      <div class="row">
+        <div class="row">
+          <div class="col-md-4 options">
+            <fieldset>
+              <legend>Settings</legend>
+              <div class="form-check form-switch">
+                <input type="checkbox" name="" value="furigana" onchange="changeSettings(this)" class="form-check-input">
+                Hide furigana
+              </div>
+              <div class="form-check form-switch">
+                <input type="checkbox" name="" value="verbType" onchange="changeSettings(this)" class="form-check-input">
+                Hide type
+              </div>
+              <div class="form-check form-switch">
+                <input type="checkbox" name="" value="english" onchange="changeSettings(this)" class="form-check-input">
+                Hide English
+              </div>
+              <div class="form-check form-switch">
+                <input type="checkbox" name="" value="score" onchange="changeSettings(this)" class="form-check-input">
+                Hide score
+              </div>
+            </fieldset>
+          </div>
+          <div class="col-md-4 options"></div>
+          <div class="col-md-4 options">
+            <fieldset>
+              <legend>Filters</legend>
+              <div class="form-check form-switch">
+                <input type="checkbox" name="" value="ICHIDAN" class="typeFilters form-check-input">
+                Ichidan
+              </div>
+              <div class="form-check form-switch">
+                <input type="checkbox" name="" value="GODAN" class="typeFilters form-check-input">
+                Godan
+              </div>
+              <div class="form-check form-switch">
+                <input type="checkbox" name="" value="IRREGULAR" class="typeFilters form-check-input">
+                Irregular
+              </div>
+              <div class="form-check form-switch">
+                <input type="checkbox" name="" id="noExpression" class="form-check-input">
+                No expressions
+              </div>
+              <div class="form-check form-switch">
+                <input type="checkbox" name="" id="onlyCommon" class="form-check-input">
+                &nbsp;Only Common
+              </div>
+            </fieldset>
+          </div>
+		<legend>Conjugations</legend>
+          <fieldset>
+            <div class="gtc-3">
+            	<div th:each="classification, status: ${verbClassifications}">
+              
+                <div class="options">
+                  <fieldset>
+                    <legend><span th:text="${classification.key}">text</span></legend>
+                    <div class="form-check form-switch" th:each="conjugation: ${classification.value}">
+                      <input type="checkbox" th:value="${conjugation.id}" class="conjugations form-check-input">
+                      <span th:text="${conjugation.conjugationName}">text</span><br>
+                    </div>
+                  </fieldset>
+                </div>
+              </div>
+            </div>
+
+          </fieldset>
+        </form>
+
+        <div class="d-flex justify-content-center mb-4">
+          <a th:href="@{/}"><p class="btn btn-outline-primary">Return to menu</p></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
   <script type="text/javascript">
   window.onload = (event) => {
     getNewVerb();
