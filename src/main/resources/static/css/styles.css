@@ -21,20 +21,33 @@ html{
 
 body{
     font-size: 1.6rem;
-    background-color: #1a1b26;
-    color: #c0caf5;
+    background-color: #9f4460;
+    color: #eab7b8;    
 }
 
 
 /* Utilities */
 
-.p-3{
-    padding: 3rem;
+/* font-size */
+.bold{
+    font-weight: bold;
+    font-size: 4rem;
 }
 
-.transparecy-20{
-    background-color: #24283b;
+
+/* padding */
+.pd-3{
+    padding: 2rem 0;
 }
+
+/* background */
+.transparecy-20{
+    background-color: #c36582;
+}
+
+
+
+/* Styles */
 
 .cover {
     height: 100vh;
@@ -48,7 +61,7 @@ body{
 }
 
 a {
-    text-decoration: none;
+    text-decoration: none !important;
 }
 
 .texto-centrado {
@@ -81,6 +94,7 @@ p span {
     justify-content: space-around;
     gap: 1rem;
     flex-wrap: wrap;
+    margin: 2.5rem 0;	
 }
 
 .flex{
@@ -90,38 +104,151 @@ p span {
     justify-content: center;
 }
 
-/*
-.gtc-3{
-    display: grid;
-    grid-template-columns: 1fr;
-    margin: 1rem;   
-}
-
-	
-@media (min-width: 480px){
-    .gtc-3{
-        grid-template-columns: repeat(2, 1fr);
-    }
-		    	    
-}
-
-@media (min-width: 720px){
-    .gtc-3{
-        grid-template-columns: repeat(3, 1fr);
-    }
-}
-
-@media (min-width: 1200px){
-    .gtc-3{
-        grid-template-columns: repeat(4, 1fr);
-    }
-}
-	
-*/
-
 
 .container{
     max-width: 80%;
+}
+
+.pink-gradient{
+	background: -moz-linear-gradient(135deg, rgba(208,122,143,0.8) 5%, rgba(208,122,143,0.15) 86%, rgba(255,255,255,0) 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(135deg, rgba(208,122,143,0.8) 5%,rgba(208,122,143,0.15) 86%,rgba(255,255,255,0) 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(135deg, rgba(208,122,143,0.8) 5%,rgba(208,122,143,0.15) 86%,rgba(255,255,255,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d07a8f', endColorstr='#00ffffff',GradientType=0 ); /* IE6-9 */
+    background-size: 400% 400%;
+	height: 100%;
+    -webkit-animation: pink-gradient-animation 9s ease infinite;
+    -moz-animation: pink-gradient-animation 9s ease infinite;
+    animation: pink-gradient-animation 9s ease infinite;    
+}
+
+ @-webkit-keyframes pink-gradient-animation {
+    0%{background-position:51% 0%}
+    50%{background-position:50% 100%}
+    100%{background-position:51% 0%}
+}
+@-moz-keyframes pink-gradient-animation {
+    0%{background-position:51% 0%}
+    50%{background-position:50% 100%}
+    100%{background-position:51% 0%}
+}
+@keyframes pink-gradient-animation {
+    0%{background-position:51% 0%}
+    50%{background-position:50% 100%}
+    100%{background-position:51% 0%}
+}
+
+.knavbar{
+	color: #FFFFFF;
+    height: 15vh;
+	display: flex;  
+  	justify-content: space-between;
+  	align-items: center; 
+  	font-size: 1.5rem;
+  	font-weight: bold;
+}
+
+.knavbar a{
+    cursor: pointer;    
+    color: #FFFFFF;
+}
+
+.knav-logo img{
+    width: 20%;
+}
+
+.knav-links{
+    width: 40%;
+}
+
+.knavbar ul{
+    width: 100%; 
+    list-style-type: none;
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+}
+
+.knav-links a{
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    display: inline-block;
+    padding: 1.5rem 2rem;
+    position: relative; 
+}
+
+.knav-links a:after {    
+  background: none repeat scroll 0 0 transparent;
+  bottom: 0;
+  content: "";
+  display: block;
+  height: 0.5rem;
+  left: 50%;
+  position: absolute;
+  background: #FFFFFF;
+  transition: width 0.3s ease 0s, left 0.3s ease 0s;
+  width: 0;
+}
+.knav-links a:hover:after { 
+  width: 100%; 
+  left: 0; 
+}
+
+/* Main panel */
+
+.main-panel{
+    height: 70vh;
+}
+
+.main-info{
+    margin-top: 6rem;
+    width: 40%;
+}
+
+.main-info p{
+    text-align: left;	
+}
+
+.main-info h1{
+    text-align: left;
+    font-size: 9rem;    
+}
+
+.main-info h1 span{
+    font-weight: bold;
+}
+
+
+.incorrect-answer{
+    display: block;
+    background-color: #f39292;
+    margin: 2rem 0;
+    color: black;
+    font-size: 3rem;
+}
+
+.correct-answer{
+    display: block;
+    background-color: #88b864;
+    margin: 2rem 0;
+    color: black;
+    font-size: 3rem;
+}
+
+input[type=text]{
+    border: 0.15rem solid white;
+    border-radius: 2rem;
+    background-color: #9f4460;
+    padding: 0.6rem 0;
+    color: white;
+    font-size: 3rem;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.va-form{
+    font-size: 2.3rem;
+    font-weight: bold;
+    text-decoration: underline;
 }
 
 .kbtn{
@@ -131,19 +258,46 @@ p span {
 } 
 
 .kbtn-primary{
-  	background-color: #A26B8F;
+  	background-color: #9f4460;
   	color: white; 
   	transition: 1s; 
+  	border: 0.3rem solid #eab7b8;
+  	text-decoration: none;
 }
 
 .kbtn-primary:hover{
-	background-color: #D5BABF;
-  	color: white;      
+	background-color: #eab7b8;
+	border: 0.3rem solid #9f4460;
+  	color: white;
+  	text-decoration: none;      
+}
+
+.kbtn-secondary{
+	background: linear-gradient(90deg, #BB6580 0%, #c3677a 25%, #e9b5b6 100%) var(--x, 0)/200%;
+	color: white; 
+  	border-radius: 3rem;
+  	width: 15rem;
+  	text-align: center;
+  	font-weight: bold;
+  	text-transform: uppercase;
+  	text-decoration: none;
+	transition: background 0.5s;  	
+}
+
+.kbtn-secondary:hover{
+    --x: 90%;		
+    color: white;
+    /*text-decoration: none;
+	color: black;
+	background: rgb(187,101,128);
+	background: linear-gradient(290deg, rgba(187,101,128,1) 0%, rgba(196,103,122,1) 25%, rgba(234,183,184,1) 100%);*/
 }
 
 .inner-card-space{
     flex-basis: calc(100% - 1rem);
     padding: 1rem; 
+    border: 2px solid white;
+    border-radius: 1rem;
 }
 
 @media (min-width: 320px){

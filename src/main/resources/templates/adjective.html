@@ -7,18 +7,19 @@
     <script th:src="@{/js/answersUtility.js}"></script>
     <meta charset="utf-8">
     <title>Katsudou - Adjective Conjugation</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
     <link rel="stylesheet" th:href="@{/css/styles.css}">
   </head>
   <body>
-    <h1 class="text-center">Adjective Conjugation Practice</h1>
+    <h1 class="text-center bold">Adjective Conjugation Practice</h1>
     <form class="text-center" onsubmit="checkAnswer()" method="get" id="answerForm" autocomplete="off">
-      <div class="" id="adjectiveConjugation">
+      <div class="va-form" id="adjectiveConjugation">
         <br>
       </div>
-      <div class="transparecy-20 p-3" id="furigana">
+      <div class="transparecy-20 pd-3" id="furigana" style="padding-bottom: 0;">
         <br>
       </div>
-      <div class="transparecy-20 p-3" id="adjective">
+      <div class="transparecy-20 bold pd-3" id="adjective" style="padding-top: 0;">
         <br>
       </div>
       <div class="" id="adjectiveType">
@@ -28,44 +29,68 @@
         <br>
       </div>
       <div class="" id="score">
-        <p><span style="color:green">0</span>/<span style="color:red">0</span>/0%</p>
+        <p style="font-size: 2rem"><span style="color:#88b864; font-size: 2rem">0</span>/<span style="color:#f39292; font-size: 2rem">0</span>/0%</p>
       </div>
       <input type="text" id="answer" oninput="toKana(this)"><br>
       <div class="" id="correctAnswer">
       </div>
-      <div class="container"> 
+      <div class="container">
       <div class="flex-cards">
-	      <fieldset>
-	        <legend>Settings</legend>
-	        <input type="checkbox" name="" value="furigana" onchange="changeSettings(this)">
-	        Hide furigana
-	        <input type="checkbox" name="" value="adjectiveType" onchange="changeSettings(this)">
-	        Hide type
-	        <input type="checkbox" name="" value="english" onchange="changeSettings(this);">
-	        Hide English
-	        <input type="checkbox" name="" value="score" onchange="changeSettings(this);">
-	        Hide score
-	      </fieldset>
-	      <fieldset>
-	        <legend>Filters</legend>
-	        <input type="checkbox" name="" value="I" class="typeFilters">
-	        	い Adjective
-	        <input type="checkbox" name="" value="NA" class="typeFilters">
-	        	な Adjective
-	        <input type="checkbox" name="" id="noExpression">
-	        No expressions<br>
-	        <input type="checkbox" name="" id="onlyCommon">
-	        &nbsp;Only Common&nbsp;&nbsp;&nbsp;<br>
-	      </fieldset>
+           <div class="inner-card-space">
+		      <fieldset>
+		        <legend>Settings</legend>
+		        <div class="form-check form-switch">
+		        	<input type="checkbox" name="" value="furigana" onchange="changeSettings(this)" class="form-check-input">
+		        	Hide furigana
+		        </div>
+		        <div class="form-check form-switch">
+		        	<input type="checkbox" name="" value="adjectiveType" onchange="changeSettings(this)" class="form-check-input">
+		        	Hide type
+		        </div>
+		        <div class="form-check form-switch">
+		        	<input type="checkbox" name="" value="english" onchange="changeSettings(this);" class="form-check-input">
+		        	Hide English
+		        </div>
+		        <div class="form-check form-switch">
+		        	<input type="checkbox" name="" value="score" onchange="changeSettings(this);" class="form-check-input">
+		        	Hide score
+		        </div>
+		      </fieldset>
+	      </div>
+	      <div class="inner-card-space">
+		      <fieldset>
+		        <legend>Filters</legend>
+		        <div class="form-check form-switch">
+		        	<input type="checkbox" name="" value="ADJECTIVE_I" class="typeFilters form-check-input">
+		        	い Adjective
+		        </div>
+		        <div class="form-check form-switch">
+			        <input type="checkbox" name="" value="ADJECTIVE_NA" class="typeFilters form-check-input">
+			        な Adjective
+		        </div>
+		        <div class="form-check form-switch">
+			    	<input type="checkbox" name="" value="ADJECTIVE_IRREGULAR" class="typeFilters form-check-input">
+			        Irregular
+			    </div>
+		        <div class="form-check form-switch">
+			        <input type="checkbox" name="" id="noExpression" class="form-check-input">
+			        No expressions<br>
+		       	</div>
+		        <div class="form-check form-switch">
+			        <input type="checkbox" name="" id="onlyCommon" class="form-check-input">
+			        &nbsp;Only Common&nbsp;&nbsp;&nbsp;<br>
+		        </div>
+		      </fieldset>
+	      </div>
       </div>
-      <h2>Conjugations</h2>
+      <h2 class="bold" >Conjugations</h2>
       <fieldset>
        <div class="flex-cards">
 	        <div class="inner-card-space" th:each="classification: ${adjectiveClassifications}">
 	        <fieldset>
 	          <h3><span th:text="${classification.key}">text</span></h3>
-	          <div th:each="conjugation: ${classification.value}">
-	            <input type="checkbox" th:value="${conjugation.id}" class="conjugations">
+	          <div class="form-check form-switch" th:each="conjugation: ${classification.value}">
+	            <input type="checkbox" th:value="${conjugation.id}" class="conjugations form-check-input" onchange="getNewConjugation()">
 	            <span th:text="${conjugation.conjugationName}">text</span><br>
 	          </div>
 	        </fieldset>
@@ -74,16 +99,16 @@
       </fieldset>
       </div>
     </form>
-  <div class="d-flex justify-content-center mb-4">
+  	<div class="d-flex justify-content-center mb-4">
           <a th:href="@{/}"><p class="kbtn kbtn-primary ">Return to menu</p></a>
 	</div>
-  
-  
-  
-  
+
+
+
+
   <script type="text/javascript">
   window.onload = (event) => {
-    getNewAdjective();
+    getNewAdjective(getNewConjugation);
   }
 
   document.getElementById('answerForm').addEventListener('submit', function(e) {
@@ -91,6 +116,7 @@
   }, false);
 
   var adjective;
+  var adjectiveConjugation;
   var correctAnswer = 0;
   var incorrectAnswer = 0;
 
@@ -98,34 +124,28 @@
     var answer = document.getElementById("answer");
     if (wanakana.isKana(answer.value)) {
       answer.disabled = true;
-      if(answer.value == adjective.conjugatedAdjective) {
-        document.getElementById("correctAnswer").innerHTML = "<p style='color:green'>Correct!</p>";
+      if(answer.value == adjectiveConjugation.word) {
+        document.getElementById("correctAnswer").innerHTML = "<p class='correct-answer'>Correct!</p>";
         correctAnswer++;
       } else {
         document.getElementById("correctAnswer").innerHTML =
-        "<p style='color:red'>Incorrect!<br>The answer was: " + adjective.conjugatedAdjective + "</p>";
+        "<p class='incorrect-answer'>Incorrect!<br>The answer was: " + adjectiveConjugation.word + "</p>";
         incorrectAnswer++;
       }
       var percentage = correctAnswer * 100 / (correctAnswer + incorrectAnswer);
-      document.getElementById("score").innerHTML = "<p><span style='color:green'>" + correctAnswer
-      + "</span>/<span style='color:red'>" + incorrectAnswer + "</span>/"
+      document.getElementById("score").innerHTML = "<p><span style='color:#88b864; font-size: 2rem'>" + correctAnswer
+      + "</span>/<span style='color:#f39292; font-size: 2rem'>" + incorrectAnswer + "</span>/"
       + percentage.toFixed(2) + "%</p>";
       await waitForEnter();
       answer.value = "";
       document.getElementById("correctAnswer").innerHTML = "";
       answer.disabled = false;
-      getNewAdjective();
+      getNewAdjective(getNewConjugation);
       document.getElementById("answer").focus();
       document.getElementById("answer").select();
     }
   }
-  function getNewAdjective() {
-    var selectedConj = document.getElementsByClassName("conjugations");
-    var conjugations = "";
-    for(const conjugation of selectedConj) {
-      if(conjugation.checked)
-        conjugations = conjugations.concat(conjugation.value,":");
-    };
+  function getNewAdjective(getNewConjugation) {
     var selectedFilters = document.getElementsByClassName("typeFilters");
     var filters = "";
     for(const filter of selectedFilters) {
@@ -133,12 +153,11 @@
         filters = filters.concat(filter.value,":");
     };
     let settings = {
-      conjugations: conjugations.substring(0,conjugations.length-1),
       typeFilters: filters.substring(0,filters.length-1),
       onlyCommon: document.getElementById("onlyCommon").checked,
       noExpression: document.getElementById("noExpression").cheked
     }
-    fetch("/adjective/conjugation", {
+    fetch("/adjective/getAdjective", {
     method: 'POST',
     headers: { 'Content-Type': 'application/json'},
     body: JSON.stringify(settings)
@@ -151,19 +170,48 @@
     .then(data => {
       adjective = JSON.parse(data);
       adjective.conjugatedAdjective = wanakana.toKana(adjective.conjugatedAdjective);
-      if (adjective.word == adjective.furigana)
+      if (adjective.kanji == adjective.kana)
         document.getElementById("furigana").innerText = "";
       else
-        document.getElementById("furigana").innerText = adjective.furigana;
-      document.getElementById("adjective").innerText = adjective.word;
-      document.getElementById("adjectiveType").innerText = adjective.type;
-      document.getElementById("adjectiveConjugation").innerText = adjective.conjugation;
+        document.getElementById("furigana").innerText = adjective.kana;
+      document.getElementById("adjective").innerText = adjective.kanji;
+      document.getElementById("adjectiveType").innerText = adjective.adjectiveType;
       var english = "";
-      adjective.meaning.forEach(x => english = english.concat(x + ", "));
+      adjective.meanings.forEach(x => english = english.concat(x + ", "));
       document.getElementById("english").innerText = english.substring(0,english.length-2);
+      getNewConjugation();
     })
     .catch(error => {
       alert("no jaló f: " + error);
+    });
+  }
+
+  function getNewConjugation() {
+    var selectedConj = document.getElementsByClassName("conjugations");
+    var conjugations = "";
+    for(const conjugation of selectedConj)
+      if(conjugation.checked)
+        conjugations = conjugations.concat(conjugation.value,":");
+    let settings = {
+      adjective: adjective,
+      conjugations: conjugations.substring(0,conjugations.length-1)
+    };
+    console.log(JSON.stringify(settings));
+    fetch("/adjective/getConjugation", {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(settings)
+    })
+    .then(response => {
+      if(response.ok)
+        return response.text();
+    })
+    .then(data => {
+      adjectiveConjugation = JSON.parse(data);
+      document.getElementById("adjectiveConjugation").innerText = adjectiveConjugation.conjugation;
+    })
+    .catch(error => {
+      alert("no jaló f2: " + error);
     });
   }
   </script>

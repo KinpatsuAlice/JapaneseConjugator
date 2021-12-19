@@ -5,31 +5,29 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.japanese.Adjective;
 import com.japanese.AdjectiveType;
-import com.japanese.Verb;
 import com.japanese.VerbType;
 
 public class Jmdict {
 	
-	private Word[] words;
+	private Term[] words;
 
 	public Jmdict() {}
 	
-	public Jmdict(@JsonProperty("words")Word[] words) {
+	public Jmdict(@JsonProperty("words")Term[] words) {
 		super();
 		this.words = words;
 	}
 
 
 
-	public Word[] getWords() {
+	public Term[] getWords() {
 		return words;
 	}
 	
-	public List<Word> getAllVerbs() {
-		List<Word> verbs = new ArrayList<>();
-		for(Word w : this.words) {
+	public List<Term> getAllVerbs() {
+		List<Term> verbs = new ArrayList<>();
+		for(Term w : this.words) {
 			for (String s: w.getSense()[0].getPartOfSpeech()) {
 				switch(s) {
 				case "v1":
@@ -55,9 +53,9 @@ public class Jmdict {
 	}
 	
 	
-	public List<Word> getAllAdjectives() {
-		List<Word> adjectives = new ArrayList<>();
-		for(Word w : this.words) {
+	public List<Term> getAllAdjectives() {
+		List<Term> adjectives = new ArrayList<>();
+		for(Term w : this.words) {
 			for (String s: w.getSense()[0].getPartOfSpeech()) {
 				switch(s) {
 				case "adj-i":

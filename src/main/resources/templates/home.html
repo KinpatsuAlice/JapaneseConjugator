@@ -12,40 +12,41 @@
 </head>
 
 <body>
-
-  <div class="container-fluid cover d-flex justify-content-center align-items-center flex-column">
-    <div class="principal-card ">
-      <div class="row">
-
-        <div class="col-md-6 d-flex justify-content-center align-items-center flex-column">
-          <p>Welcome to <span>Katsudou</span>, the best online Japanese conjugator practice tool that has ever existed
-          </p>
-
-
-          <div class="row ">
-            <div class="col-md-3">
-              <a th:href="@{/verb}" href="#" class="btn btn-primary">Verb Practice</a>
-            </div>
-
-            <div class="col-md-4">
-              <a th:href="@{/adjective}" href="#" class="btn btn-primary">Adjective Practice</a>
-            </div>
-
-            <div class="col-md-4">
-              <a th:href="@{/counter}" href="#" class="btn btn-primary">Counter Practice (Coming soon)</a>
-            </div>
-
-          </div>
-        </div>
-
-        <div class="col-md-6">
-          <img class="img-logo" th:src="@{img/logo-sin-fondo.png}" alt="">
-        </div>
-
-      </div>
-    </div>
-  </div>
-
+	<div class="cover">
+    	<div class="pink-gradient">
+			<nav class="knavbar container">
+			            <div class="knav-logo">
+			                  <a><img th:src="@{img/logo-sin-fondo.png}"></img></a>
+			            </div>
+			            <div class="knav-links">
+			            	<ul>
+			                	<li><a th:href="@{/verb}">Verbs</a></li>
+			                    <li><a th:href="@{/adjective}">Adjectives</a></li>
+			                    <li><a>Counters</a></li>     
+			                </ul>
+			            </div>
+		    </nav>	
+		
+		  <div class="container main-panel">
+                    
+			<div class="main-info">
+                 <h1>Welcome to <span>KATSUDOU<span></h1>
+                 <p><span>Katsudou</span>, the best online Japanese conjugator practice tool that has ever existed</p>
+                 <br><br><br>
+                 <div class="d-flex justify-content-between mb-4 w-75">
+          			<a class="kbtn kbtn-secondary" th:href="@{/verb}">Verbs</a>
+          			<a class="kbtn kbtn-secondary" th:href="@{/adjective}">Adjectives</a>
+				</div>
+			</div>                    	
+                    
+		    
+		    
+		
+		      </div>
+		    </div>
+		  </div>
+	  </div>
+	</div>
   <script th:src="@{js/bootstrap.bundle.js}"></script>
 </body>
 

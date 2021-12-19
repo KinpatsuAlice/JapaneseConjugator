@@ -12,13 +12,13 @@
     <link rel="stylesheet" th:href="@{/css/styles.css}">
   </head>
   <body>
-    <body class="bg-light">
+    <body>
       <div class="container-fluid">
 
           <!-- Page Title -->
         <div class="row">
           <div class="col-md-12">
-            <h1 class="text-center">Verb Conjugation Practice</h1>
+            <h1 class="text-center bold">Verb Conjugation Practice</h1>
           </div>
         </div>
           <!-- /Page Title -->
@@ -27,101 +27,101 @@
       <!-- Verbo a conjugar y todas las especificaciones -->
 
       <!-- Opciones -->
-      <div class="row">
-        <div class="" id="verbConjugation"></div>
-        <div class="" id="furigana"></div>
-        <div class="verbo-div" id="verb"></div>
+
+        <div class="va-form" id="verbConjugation"></div>
+        <div class="transparecy-20 pd-3" id="furigana"  style="padding-bottom: 0;"></div>
+        <div class="transparecy-20 pd-3 bold" id="verb" style="padding-top: 0;"></div>
         <div class="" id="verbType"></div>
         <div class="" id="english"></div>
         <div class="" id="score">
-          <p><span style="color:green">0</span>/<span style="color:red">0</span>/0%</p>
+          <p style="font-size: 2rem"><span style="color:#88b864; font-size: 2rem">0</span>/<span style="color:#f39292; font-size: 2rem">0</span>/0%</p>
         </div>
         <div class="input-verb">
-          <input type="text" id="answer" oninput="toKana(this)" class="form-control"><br>
+          <input type="text" id="answer" oninput="toKana(this)" ><br>
         </div>
         <div class="" id="correctAnswer"></div>
-      </div>
-      <!-- /Verbo a conjugar y todas las especificaciones -->
-      <div class="row">
-        <div class="row">
-          <div class="col-md-4 options">
-            <fieldset>
-              <legend>Settings</legend>
-              <div class="form-check form-switch">
-                <input type="checkbox" name="" value="furigana" onchange="changeSettings(this)" class="form-check-input">
-                Hide furigana
-              </div>
-              <div class="form-check form-switch">
-                <input type="checkbox" name="" value="verbType" onchange="changeSettings(this)" class="form-check-input">
-                Hide type
-              </div>
-              <div class="form-check form-switch">
-                <input type="checkbox" name="" value="english" onchange="changeSettings(this)" class="form-check-input">
-                Hide English
-              </div>
-              <div class="form-check form-switch">
-                <input type="checkbox" name="" value="score" onchange="changeSettings(this)" class="form-check-input">
-                Hide score
-              </div>
-            </fieldset>
-          </div>
-          <div class="col-md-4 options"></div>
-          <div class="col-md-4 options">
-            <fieldset>
-              <legend>Filters</legend>
-              <div class="form-check form-switch">
-                <input type="checkbox" name="" value="ICHIDAN" class="typeFilters form-check-input">
-                Ichidan
-              </div>
-              <div class="form-check form-switch">
-                <input type="checkbox" name="" value="GODAN" class="typeFilters form-check-input">
-                Godan
-              </div>
-              <div class="form-check form-switch">
-                <input type="checkbox" name="" value="IRREGULAR" class="typeFilters form-check-input">
-                Irregular
-              </div>
-              <div class="form-check form-switch">
-                <input type="checkbox" name="" id="noExpression" class="form-check-input">
-                No expressions
-              </div>
-              <div class="form-check form-switch">
-                <input type="checkbox" name="" id="onlyCommon" class="form-check-input">
-                &nbsp;Only Common
-              </div>
-            </fieldset>
-          </div>
-		<legend>Conjugations</legend>
-          <fieldset>
-            <div class="gtc-3">
-            	<div th:each="classification, status: ${verbClassifications}">
-              
-                <div class="options">
-                  <fieldset>
-                    <legend><span th:text="${classification.key}">text</span></legend>
-                    <div class="form-check form-switch" th:each="conjugation: ${classification.value}">
-                      <input type="checkbox" th:value="${conjugation.id}" class="conjugations form-check-input">
-                      <span th:text="${conjugation.conjugationName}">text</span><br>
-                    </div>
-                  </fieldset>
-                </div>
-              </div>
-            </div>
 
-          </fieldset>
+      <!-- /Verbo a conjugar y todas las especificaciones -->
+
+          <div class="container">
+           	<div class="flex-cards">
+            		<div class="inner-card-space">
+			            <fieldset>
+			              <legend>Settings</legend>
+			              <div class="form-check form-switch">
+			                <input type="checkbox" name="" value="furigana" onchange="changeSettings(this)" class="form-check-input">
+			                Hide furigana
+			              </div>
+			              <div class="form-check form-switch">
+			                <input type="checkbox" name="" value="verbType" onchange="changeSettings(this)" class="form-check-input">
+			                Hide type
+			              </div>
+			              <div class="form-check form-switch">
+			                <input type="checkbox" name="" value="english" onchange="changeSettings(this)" class="form-check-input">
+			                Hide English
+			              </div>
+			              <div class="form-check form-switch">
+			                <input type="checkbox" name="" value="score" onchange="changeSettings(this)" class="form-check-input">
+			                Hide score
+			              </div>
+			            </fieldset>
+			        </div>
+		          	<div class="inner-card-space">
+			            <fieldset>
+			              <legend>Filters</legend>
+			              <div class="form-check form-switch">
+			                <input type="checkbox" name="" value="VERB_ICHIDAN" class="typeFilters form-check-input">
+			                Ichidan
+			              </div>
+			              <div class="form-check form-switch">
+			                <input type="checkbox" name="" value="VERB_GODAN" class="typeFilters form-check-input">
+			                Godan
+			              </div>
+			              <div class="form-check form-switch">
+			                <input type="checkbox" name="" value="VERB_IRREGULAR" class="typeFilters form-check-input">
+			                Irregular
+			              </div>
+			              <div class="form-check form-switch">
+			                <input type="checkbox" name="" id="noExpression" class="form-check-input">
+			                No expressions
+			              </div>
+			              <div class="form-check form-switch">
+			                <input type="checkbox" name="" id="onlyCommon" class="form-check-input">
+			                &nbsp;Only Common
+			              </div>
+			            </fieldset>
+		            </div>
+            </div>
+		<h2 class="bold">Conjugations</h2>
+
+	          <fieldset>
+                      <div class="flex-cards">
+	            	<div class="inner-card-space" th:each="classification, status: ${verbClassifications}">
+	                <div class="options">
+	                  <fieldset>
+	                    <legend><span th:text="${classification.key}">text</span></legend>
+	                    <div class="form-check form-switch" th:each="conjugation: ${classification.value}">
+	                      <input type="checkbox" th:value="${conjugation.id}" class="conjugations form-check-input" onchange="getNewConjugation()">
+	                      <span th:text="${conjugation.conjugationName}">text</span><br>
+	                    </div>
+	                  </fieldset>
+	                </div>
+	              </div>
+	              </div>
+	          </fieldset>
+
+          </div>
         </form>
 
-        <div class="d-flex justify-content-center mb-4">
-          <a th:href="@{/}"><p class="btn btn-outline-primary">Return to menu</p></a>
-        </div>
+         <div class="d-flex justify-content-center mb-4">
+          <a th:href="@{/}"><p class="kbtn kbtn-primary ">Return to menu</p></a>
+	</div>
       </div>
-    </div>
-  </div>
 
 
   <script type="text/javascript">
   window.onload = (event) => {
-    getNewVerb();
+    getNewVerb(getNewConjugation);
   }
 
   document.getElementById('answerForm').addEventListener('submit', function(e) {
@@ -129,6 +129,7 @@
   }, false);
 
   var verb;
+  var verbConjugation;
   var correctAnswer = 0;
   var incorrectAnswer = 0;
 
@@ -136,72 +137,92 @@
     var answer = document.getElementById("answer");
     if (wanakana.isKana(answer.value)) {
       answer.disabled = true;
-      if(answer.value == verb.conjugatedVerb) {
-        document.getElementById("correctAnswer").innerHTML = "<p style='color:green'>Correct!</p>";
+      if(answer.value == verbConjugation.word) {
+        document.getElementById("correctAnswer").innerHTML = "<p  class='correct-answer'>Correct!</p>";
         correctAnswer++;
       } else {
         document.getElementById("correctAnswer").innerHTML =
-        "<p style='color:red'>Incorrect!<br>The answer was: " + verb.conjugatedVerb + "</p>";
+        "<p class='incorrect-answer'>Incorrect!<br>The answer was: " + verbConjugation.word + "</p>";
         incorrectAnswer++;
       }
       var percentage = correctAnswer * 100 / (correctAnswer + incorrectAnswer);
-      document.getElementById("score").innerHTML = "<p><span style='color:green'>" + correctAnswer
-      + "</span>/<span style='color:red'>" + incorrectAnswer + "</span>/"
+      document.getElementById("score").innerHTML = "<p><span style='color:#88b864; font-size: 2rem'>" + correctAnswer
+      + "</span>/<span style='color:#f39292; font-size: 2rem'>" + incorrectAnswer + "</span>/"
       + percentage.toFixed(2) + "%</p>";
       await waitForEnter();
       answer.value = "";
       document.getElementById("correctAnswer").innerHTML = "";
       answer.disabled = false;
-      getNewVerb();
+      getNewVerb(getNewConjugation);
       document.getElementById("answer").focus();
       document.getElementById("answer").select();
     }
   }
-  function getNewVerb() {
-    var selectedConj = document.getElementsByClassName("conjugations");
-    var conjugations = "";
-    for(const conjugation of selectedConj) {
-      if(conjugation.checked)
-        conjugations = conjugations.concat(conjugation.value,":");
-    };
+  function getNewVerb(getNewConjugation) {
     var selectedFilters = document.getElementsByClassName("typeFilters");
     var filters = "";
     for(const filter of selectedFilters) {
       if(filter.checked)
         filters = filters.concat(filter.value,":");
-    };
+    }
     let settings = {
-      conjugations: conjugations.substring(0,conjugations.length-1),
       typeFilters: filters.substring(0,filters.length-1),
       onlyCommon: document.getElementById("onlyCommon").checked,
       noExpression: document.getElementById("noExpression").cheked
-    }
-    fetch("/verb/conjugation", {
+    };
+    fetch("/verb/getVerb", {
     method: 'POST',
     headers: { 'Content-Type': 'application/json'},
     body: JSON.stringify(settings)
     })
     .then(response => {
-      if(response.ok) {
+      if(response.ok)
         return response.text();
-      }
     })
     .then(data => {
       verb = JSON.parse(data);
-      verb.conjugatedVerb = wanakana.toKana(verb.conjugatedVerb);
-      if (verb.word == verb.furigana)
+      console.log("Kana: " + verb.kana);
+      if (verb.kanji == verb.kana)
         document.getElementById("furigana").innerText = "";
       else
-        document.getElementById("furigana").innerText = verb.furigana;
-      document.getElementById("verb").innerText = verb.word;
-      document.getElementById("verbType").innerText = verb.type;
-      document.getElementById("verbConjugation").innerText = verb.conjugation;
+        document.getElementById("furigana").innerText = verb.kana;
+      document.getElementById("verb").innerText = verb.kanji;
+      document.getElementById("verbType").innerText = verb.verbType;
       var english = "";
-      verb.meaning.forEach(x => english = english.concat(x + ", "));
+      verb.meanings.forEach(x => english = english.concat(x + ", "));
       document.getElementById("english").innerText = english.substring(0,english.length-2);
+      getNewConjugation();
     })
     .catch(error => {
       alert("no jaló f: " + error);
+    });
+  }
+
+  function getNewConjugation() {
+    var selectedConj = document.getElementsByClassName("conjugations");
+    var conjugations = "";
+    for(const conjugation of selectedConj)
+      if(conjugation.checked)
+        conjugations = conjugations.concat(conjugation.value,":");
+    let settings = {
+      verb: verb,
+      conjugations: conjugations.substring(0,conjugations.length-1)
+    };
+    fetch("/verb/getConjugation", {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(settings)
+    })
+    .then(response => {
+      if(response.ok)
+        return response.text();
+    })
+    .then(data => {
+      verbConjugation = JSON.parse(data);
+      document.getElementById("verbConjugation").innerText = verbConjugation.conjugation;
+    })
+    .catch(error => {
+      alert("no jaló f2: " + error);
     });
   }
   </script>

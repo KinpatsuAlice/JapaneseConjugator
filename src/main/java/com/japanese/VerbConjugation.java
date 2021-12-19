@@ -34,12 +34,12 @@ public enum VerbConjugation {
 	POLITE_CONJUNCTIVE_FORM("Po-Conj","い","まして","Polite Conjunctive form",CONJUNCTIVE),
 	POLITE_NEGATIVE_CONJUNCTIVE_FORM("Po-Ne-Conj","い","ませんで","Polite Negative Conjuctive form",CONJUNCTIVE),
 	//Imperative form
-	NEGATIVE_IMPERATIVE_FORM("Ne-Im","う","な","Negative Imperative",IMPERATIVE),
-	POLITE_IMPERATIVE_FORM("Po-Im","い","なさい","Polite Imperative",IMPERATIVE),
+	NEGATIVE_IMPERATIVE_FORM("Ne-Im","う","な","Negative Imperative form",IMPERATIVE),
+	POLITE_IMPERATIVE_FORM("Po-Im","い","なさい","Polite Imperative form",IMPERATIVE),
 	//Potential form
 	POTENTIAL_FORM("Pt","え","る","られる","Potential form",POTENTIAL),
 	NEGATIVE_POTENTIAL_FORM("Ne-Pt","え","ない","られない","Negative Potential form",POTENTIAL),
-	NEGATIVE_PAST_POTENTIAL_FORM("Ne-Pa-Pt","え","ない","られない","Negative Past Potential form",POTENTIAL),
+	NEGATIVE_PAST_POTENTIAL_FORM("Ne-Pa-Pt","え","なかった","られなかった","Negative Past Potential form",POTENTIAL),
 	PAST_POTENTIAL_FORM("Pa-Pt","え","た","られた","Past Potential form",POTENTIAL),
 	//Passive form
 	PASSIVE_FORM("Ps","あ","れる","られる","Passive form",PASSIVE_CAUSATIVE),
@@ -188,39 +188,39 @@ public enum VerbConjugation {
 		exceptions.get("くる").put(SUGIRU_FORM,"きすぎる");
 		return exceptions;
 	}
-	public void printSteps(Verb verb) {
+	/*public void printSteps(Verb verb) {
 		
-	}
+	}*/
 	
 	public static VerbConjugation getVerbConjugation(String s) {
 		return conjugations.get(s);
 	}
 	
-	public String getGodanInflection(Verb verb) {
+	public String getGodanInflection(String lastKana) {
 		switch(this.godanForm) {
 			case "あ":
-				return godanInflections.get(verb.getVerbEnding())[0];
+				return godanInflections.get(lastKana)[0];
 			case "い":
-				return godanInflections.get(verb.getVerbEnding())[1];
+				return godanInflections.get(lastKana)[1];
 			case "う":
-				return godanInflections.get(verb.getVerbEnding())[2];
+				return godanInflections.get(lastKana)[2];
 			case "え":
-				return godanInflections.get(verb.getVerbEnding())[3];
+				return godanInflections.get(lastKana)[3];
 			case "お":
-				return godanInflections.get(verb.getVerbEnding())[4];
+				return godanInflections.get(lastKana)[4];
 			case "た":
-				return godanInflections.get(verb.getVerbEnding())[5];
+				return godanInflections.get(lastKana)[5];
 			case "たら":
-				return godanInflections.get(verb.getVerbEnding())[6];
+				return godanInflections.get(lastKana)[6];
 			case "て":
-				return godanInflections.get(verb.getVerbEnding())[7];
+				return godanInflections.get(lastKana)[7];
 			default:
 				return "";
 		}
 	}
 	
-	public String getIrregularConjugation(Verb verb) {
-		String furigana = verb.getFurigana();
+	public String getIrregularConjugation(VerbDTO verb) {
+		String furigana = verb.getKana();
 		return furigana.substring(0,furigana.length() - 2)
 				.concat(irregulars.get(furigana.substring(furigana.length() - 2,furigana.length())).get(this));
 	}

@@ -11,18 +11,16 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.japanese.Verb;
-import com.japanese.VerbRepository;
 import com.japanese.VerbType;
 
 public class JacksonUnmarshaller {
 	
 	
-	public static Word getWord()
+	public static Term getWord()
 			throws JsonParseException, JsonMappingException, IOException {
 		ObjectMapper mapper = new ObjectMapper()
 				.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-		Word word = mapper.readValue(new File("src\\main\\resources\\static\\test.json"), Word.class);
+		Term word = mapper.readValue(new File("src\\main\\resources\\static\\test.json"), Term.class);
 		return word;
 	}
 	

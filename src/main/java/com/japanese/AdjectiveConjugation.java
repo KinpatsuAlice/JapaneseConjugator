@@ -67,7 +67,7 @@ public enum AdjectiveConjugation {
 		return conjugations.get(s);
 	}
 	
-	public List<String> showSteps(Adjective adjective) {
+	/*public List<String> showSteps(Adjective adjective) {
 		AdjectiveType type = adjective.getType();
 		String adjInflection;
 		List<String> adjectiveSteps = new ArrayList<>();
@@ -80,7 +80,7 @@ public enum AdjectiveConjugation {
 		adjectiveSteps.add(adjectiveSteps.get(0).concat(adjInflection));
 		steps.add(adjectiveSteps.get(0) + " -> " + adjectiveSteps.get(1));
 		return steps;
-	}
+	}*/
 	
 	public static Map<String,List<AdjectiveConjugation>> getClassifiedConjugations() {
 		AdjectiveConjugationClassification[] classifications = AdjectiveConjugationClassification.values();
